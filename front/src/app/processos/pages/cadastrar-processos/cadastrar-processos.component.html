@@ -1,8 +1,9 @@
 <div class="flex-container">
   <button mat-mini-fab color="primary" routerLink="/processos" aria-label="Voltar aos processos">
-    <mat-icon>arrow_left</mat-icon>
+    Voltar
   </button>
   <mat-card>
+    <h1>Cadastrar processos</h1>
     <form [formGroup]="mainForm" (ngSubmit)="onSubmit()">
       <mat-form-field appearance="outline">
         <mat-label>SEI</mat-label>
@@ -136,4 +137,7 @@
       <button mat-raised-button color="primary" type="submit">Enviar</button>
     </form>
   </mat-card>
+  <img src="/front/src/assets/PREFEITURA_2.png" alt="SPRegula">
 </div>
+
+
