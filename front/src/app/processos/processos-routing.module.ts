@@ -15,7 +15,7 @@ const routes: Routes = [
     component: EditarProcessosComponent
   },
   {
-    path: 'listar-processos',
+    path: '',
     pathMatch: 'full',
     component: ListarProcessosComponent
   },

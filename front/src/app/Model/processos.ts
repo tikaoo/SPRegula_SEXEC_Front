@@ -1,5 +1,5 @@
 export interface IProcessos {
-  id?:number,
+  idProcesso?:number,
   SEI: string,
   requerente: string,
   setor_requerente: string,

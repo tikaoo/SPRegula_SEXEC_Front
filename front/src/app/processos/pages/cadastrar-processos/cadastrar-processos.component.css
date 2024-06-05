@@ -14,12 +14,15 @@ h1 {
 
 .flex-container {
   display: flex;
-  flex-direction: column;
+  justify-content: center;
   align-items: center;
+  height: 100vh;
+  flex-direction: column;
   width: 100%;
   padding: 20px;
   box-sizing: border-box;
   background-color: #3c135e;
+
 }
 
 button[mat-mini-fab] {

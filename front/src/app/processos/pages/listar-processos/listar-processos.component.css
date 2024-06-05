@@ -1,0 +1,40 @@
+.add {
+  position: fixed;
+  right: 68px;
+  bottom: 10px;
+}
+.mat-mdc-table {
+   white-space:nowrap;
+}
+.mdc-data-table__table {
+  white-space: nowrap;
+  table-layout: fixed;
+  font-size: small;
+  height: 80vh;
+  font-size: x-small;
+  width: 100%;
+
+}
+.flex-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 105%;
+  flex-direction: column;
+  width: 250%;
+  padding: 20px;
+  box-sizing: border-box;
+  background-color: #3c135e;
+
+}
+.mat-mdc-header-cell {
+  font-weight: bold;
+  font-size: small;
+}
+.mat-mdc-form-field {
+  font-size: 0.5px;
+  width: 100%;
+}
+.paginador{
+  width: 100%;
+}
