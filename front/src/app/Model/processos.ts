@@ -1,4 +1,4 @@
-export interface IProcessos {
+export interface IProcessosSexec {
   idProcesso?:number,
   SEI: string,
   requerente: string,

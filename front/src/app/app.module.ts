@@ -4,6 +4,7 @@ import { MaterialModule } from './Material/material.module';
 import { AppRoutingModule } from './app.routes';
 import { BrowserModule } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
+import { provideHttpClient, withFetch } from '@angular/common/http';
 
 
 
@@ -19,9 +20,8 @@ import { CommonModule } from '@angular/common';
     AppRoutingModule,
     CommonModule,
     NoopAnimationsModule
-
   ],
-  providers: [],
+  providers: [provideHttpClient(withFetch())],
 
 })
 export class AppModule { }
