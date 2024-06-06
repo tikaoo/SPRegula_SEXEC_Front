@@ -11,7 +11,7 @@ const routes: Routes = [
     component: CadastrarProcessosComponent
   },
   {
-    path: 'edit/:id',
+    path: 'edit/:idProcesso',
     component: EditarProcessosComponent
   },
   {

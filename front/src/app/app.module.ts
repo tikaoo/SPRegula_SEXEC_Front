@@ -7,8 +7,6 @@ import { CommonModule } from '@angular/common';
 import { provideHttpClient, withFetch } from '@angular/common/http';
 
 
-
-
 @NgModule({
   declarations: [
 
@@ -21,7 +19,8 @@ import { provideHttpClient, withFetch } from '@angular/common/http';
     CommonModule,
     NoopAnimationsModule
   ],
-  providers: [provideHttpClient(withFetch())],
+
+  providers: [provideHttpClient(withFetch())]
 
 })
 export class AppModule { }

@@ -4,7 +4,7 @@
   </button>
   <mat-card>
     <h1>Cadastrar processos</h1>
-    <form [formGroup]="mainForm" (ngSubmit)="onSubmit()">
+    <form [formGroup]="mainForm" (ngSubmit)="cadastrarProcess()">
       <mat-form-field appearance="outline">
         <mat-label>SEI</mat-label>
         <input matInput formControlName="SEI" required>

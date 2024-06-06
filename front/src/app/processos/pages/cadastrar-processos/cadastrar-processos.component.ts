@@ -2,16 +2,27 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { MaterialModule } from '../../../Material/material.module';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
-import {
-  trigger,
-  state,
-  style,
-  animate,
-  transition
-} from '@angular/animations';
+import {trigger,state,style,animate,transition} from '@angular/animations';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
-import { MatFormFieldModule } from '@angular/material/form-field';
+import { Router } from '@angular/router';
+import { ProcessosHttpService } from '../../services/processos-http.service';
+import Swal from 'sweetalert2';
+import { IProcessosSexec } from '../../../Model/processos';
+import 'moment/locale/pt'
+import { MAT_DATE_FORMATS } from '@angular/material/core';
+
+export const MY_DATE_FORMATS = {
+  parse: {
+    dateInput: 'DD/MM/YYYY',
+  },
+  display: {
+    dateInput: 'DD/MM/YYYY',
+    monthYearLabel: 'MMMM YYYY',
+    dateA11yLabel: 'LL',
+    monthYearA11yLabel: 'MMMM YYYY'
+  },
+};
+
 
 @Component({
   selector: 'app-cadastrar-processos',
@@ -40,13 +51,19 @@ import { MatFormFieldModule } from '@angular/material/form-field';
       ]),
     ]),
   ],
+  providers: [
+    { provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS }
+  ]
 
 })
 export class CadastrarProcessosComponent implements OnInit {
   mainForm: FormGroup ;
+  private dirty: boolean = false;
 
   constructor(private fb: FormBuilder,
-    private route: ActivatedRoute
+    private route: Router,
+    private http: ProcessosHttpService,
+
   ) {
     this.mainForm = this.fb.group({
       SEI: ['', Validators.required],
@@ -78,10 +95,27 @@ export class CadastrarProcessosComponent implements OnInit {
   ngOnInit(): void {}
 
 
-
-  onSubmit() {
-    if (this.mainForm.valid) {
-      console.log(this.mainForm.value);
+  cadastrarProcess(){
+    const process: IProcessosSexec = this.mainForm.value as IProcessosSexec;
+    this.http.addProcesso(process).subscribe(()=>{
+      Swal.fire('Sucesso!', 'Processo cadastrado com sucesso', 'success');
+      this.route.navigateByUrl('/processos/sexec')
+      this.dirty = false;
+    },
+    (e)=>{
+      if(e.status===500){
+        Swal.fire('Erro!', 'SEI já cadastrado', 'error');
+      }else if (e.status === 409) {
+        Swal.fire('Erro!', 'CPF Inválido', 'error');
+      }else {
+        Swal.fire('Erro!', 'Falha ao adicionar processo.', 'error');
+      }
     }
+   )
   }
+  dirtyInput() {
+    this.dirty = true;
+  }
+
+
 }

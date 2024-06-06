@@ -1,3 +1,5 @@
+import { Data } from "@angular/router";
+
 export interface IProcessosSexec {
   idProcesso?:number,
   SEI: string,
