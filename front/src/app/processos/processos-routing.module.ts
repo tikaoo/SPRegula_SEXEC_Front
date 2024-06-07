@@ -11,7 +11,7 @@ const routes: Routes = [
     component: CadastrarProcessosComponent
   },
   {
-    path: 'edit/:idProcesso',
+    path: 'spregula/edit/:SEI',
     component: EditarProcessosComponent
   },
   {
@@ -19,10 +19,7 @@ const routes: Routes = [
     pathMatch: 'full',
     component: ListarProcessosComponent
   },
-  {
-    path: ':idProcesso',
-    component: ProcessoComponent,
-  }
+
 ];
 
 @NgModule({

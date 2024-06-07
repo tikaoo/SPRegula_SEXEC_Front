@@ -61,7 +61,7 @@ export class ListarProcessosComponent implements OnInit, AfterViewInit {
     )
   }
 
-  deleteProcess(SEI: number): void {
+  deleteProcess(SEI: string): void {
     Swal.fire({
       title: 'Tem certeza que deseja deletar este processo SEI?',
       icon: 'warning',

@@ -1,0 +1,105 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  overflow: hidden;
+}
+
+h1 {
+  margin-bottom: 50px;
+}
+
+.flex-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  flex-direction: column;
+  width: 100%;
+  padding: 20px;
+  box-sizing: border-box;
+  background-color: #3c135e;
+
+}
+
+button[mat-mini-fab] {
+  align-self: flex-start;
+  margin-bottom: 20px;
+  width: 80px;
+  background-color: #eeff00;
+  padding: 10px 20px;
+  border: none;
+  color: #111111;
+  font-size: 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+mat-card {
+  width: 88%;
+  height: 100%;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background: #e7dede;
+  box-sizing: border-box;
+  overflow-y: auto;
+  align-items: center;
+  margin-bottom: 70px;
+}
+
+form {
+  width: 95%;
+  margin-left: 50px;
+}
+
+mat-form-field {
+  width: 20%;
+  margin-left: 45px;
+}
+
+mat-form-field input,
+mat-form-field textarea {
+  border-radius: 4px;
+  font-size: 15px;
+}
+
+mat-form-field input:focus,
+mat-form-field textarea:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+mat-form-field .mat-error {
+  font-size: 14px;
+  color: red;
+}
+
+button[mat-raised-button] {
+  padding: 10px 20px;
+  background-color: #eeff00;
+  border: none;
+  color: #111111;
+  font-size: 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin: 20px 20px 20px 150px;
+}
+
+button[mat-raised-button]:hover {
+  background-color: #4500b3;
+  color: #e7e1e1;
+}
+
+button[mat-mini-fab]:hover {
+  background-color: #4500b3;
+  color: #e7e1e1;
+}
+img {
+  margin-bottom: 30px;
+}

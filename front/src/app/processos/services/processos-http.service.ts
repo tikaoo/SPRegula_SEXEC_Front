@@ -21,20 +21,20 @@ public getProcessos(): Observable<IProcessosSexec[]> {
   public getProcessoId(idProcesso: number):Observable<IProcessosSexec>{
     return this.http.get<IProcessosSexec>(`${this.baseURL}/${idProcesso}`)
   }
-  public getProcessoSei(SEI: number):Observable<IProcessosSexec>{
-    return this.http.get<IProcessosSexec>(`${this.baseURL}/${SEI}`)
+  public getProcessoSei(SEI: string):Observable<IProcessosSexec>{
+    return this.http.get<IProcessosSexec>(`${this.baseURL}/spregula/${SEI}`)
   }
   public deleteProcesso(idProcesso: number): Observable<void>{
     return this.http.delete<void>(`${this.baseURL}/${idProcesso}`)
   }
-  public deleteProcessoSei(SEI: number): Observable<void>{
-    return this.http.delete<void>(`${this.baseURL}/${SEI}`)
+  public deleteProcessoSei(SEI: string): Observable<void>{
+    return this.http.delete<void>(`${this.baseURL}/spregula/${SEI}`)
   }
   public addProcesso(processo: IProcessosSexec):Observable<IProcessosSexec>{
     return this.http.post<IProcessosSexec>(`${this.baseURL}`,processo)
   }
   public editProcesso(processo: IProcessosSexec): Observable<IProcessosSexec>{
-    return this.http.put<IProcessosSexec>(`${this.baseURL}/${processo.SEI}`,processo)
+    return this.http.put<IProcessosSexec>(`${this.baseURL}/spregula/${processo.SEI}`,processo)
   }
 }
 

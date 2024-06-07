@@ -1,8 +1,7 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { MaterialModule } from '../../../Material/material.module';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
-import {trigger,state,style,animate,transition} from '@angular/animations';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ProcessosHttpService } from '../../services/processos-http.service';
@@ -13,13 +12,10 @@ import { MAT_DATE_FORMATS } from '@angular/material/core';
 
 export const MY_DATE_FORMATS = {
   parse: {
-    dateInput: 'DD/MM/YYYY',
+    dateInput: 'YYYY/MM/DD',
   },
   display: {
-    dateInput: 'DD/MM/YYYY',
-    monthYearLabel: 'MMMM YYYY',
-    dateA11yLabel: 'LL',
-    monthYearA11yLabel: 'MMMM YYYY'
+    dateInput: 'YYYY/MM/DD',
   },
 };
 
@@ -30,29 +26,8 @@ export const MY_DATE_FORMATS = {
   imports: [MaterialModule,CommonModule,MatMomentDateModule,ReactiveFormsModule],
   templateUrl: './cadastrar-processos.component.html',
   styleUrl: './cadastrar-processos.component.css',
-  animations: [
-    trigger('transitionMessages', [
-      // ...
-      state('open', style({
-        height: '200px',
-        opacity: 1,
-        backgroundColor: 'yellow'
-      })),
-      state('closed', style({
-        height: '100px',
-        opacity: 0.8,
-        backgroundColor: 'blue'
-      })),
-      transition('open => closed', [
-        animate('1s')
-      ]),
-      transition('closed => open', [
-        animate('0.5s')
-      ]),
-    ]),
-  ],
   providers: [
-    { provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS }
+    { provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS },DatePipe
   ]
 
 })
@@ -63,6 +38,7 @@ export class CadastrarProcessosComponent implements OnInit {
   constructor(private fb: FormBuilder,
     private route: Router,
     private http: ProcessosHttpService,
+    private datePipe: DatePipe
 
   ) {
     this.mainForm = this.fb.group({
@@ -96,6 +72,17 @@ export class CadastrarProcessosComponent implements OnInit {
 
 
   cadastrarProcess(){
+    const formValues = this.mainForm.value;
+
+    // Transformar as datas para o formato 'yyyy-MM-dd'
+    formValues.data_entrada_regula = this.datePipe.transform(formValues.data_entrada_regula, 'yyyy-MM-dd');
+    formValues.data_entrada_sexec = this.datePipe.transform(formValues.data_entrada_sexec, 'yyyy-MM-dd');
+    formValues.data_envio_interno = this.datePipe.transform(formValues.data_envio_interno, 'yyyy-MM-dd');
+    formValues.prazo_resposta = this.datePipe.transform(formValues.prazo_resposta, 'yyyy-MM-dd');
+    formValues.data_retorno = this.datePipe.transform(formValues.data_retorno, 'yyyy-MM-dd');
+    formValues.data_envio_externo = this.datePipe.transform(formValues.data_envio_externo, 'yyyy-MM-dd');
+    formValues.data_preenchimento = this.datePipe.transform(formValues.data_preenchimento, 'yyyy-MM-dd');
+    
     const process: IProcessosSexec = this.mainForm.value as IProcessosSexec;
     this.http.addProcesso(process).subscribe(()=>{
       Swal.fire('Sucesso!', 'Processo cadastrado com sucesso', 'success');
