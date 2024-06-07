@@ -20,7 +20,7 @@ export interface IProcessosSexec {
   data_retorno: Date,
   tm_resposta: number,
   status: string,
-  informacoes_tecnica: string,
+  informacoes_tecnicas: string,
   ponto_sei_enviado_externo: string,
   data_envio_externo: Date,
   data_preenchimento: Date,

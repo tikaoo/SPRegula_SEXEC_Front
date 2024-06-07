@@ -1,5 +1,5 @@
 <div class="flex-container">
-  <button mat-mini-fab color="primary" routerLink="/processos" aria-label="Voltar aos processos">
+  <button mat-mini-fab color="primary" routerLink="/processos/sexec" aria-label="Voltar aos processos">
     Voltar
   </button>
   <mat-card>
@@ -107,8 +107,8 @@
       </mat-form-field>
       <mat-form-field appearance="outline">
         <mat-label>Informações Técnicas</mat-label>
-        <textarea matInput formControlName="informacoes_tecnica" required></textarea>
-        <mat-error *ngIf="processosForm.get('informacoes_tecnica')?.hasError('required')">Informações Técnicas são obrigatórias</mat-error>
+        <textarea matInput formControlName="informacoes_tecnicas" required></textarea>
+        <mat-error *ngIf="processosForm.get('informacoes_tecnicas')?.hasError('required')">Informações Técnicas são obrigatórias</mat-error>
       </mat-form-field>
       <mat-form-field appearance="outline">
         <mat-label>Ponto SEI Enviado Externo</mat-label>
@@ -134,7 +134,7 @@
         <textarea matInput formControlName="observacao" required></textarea>
         <mat-error *ngIf="processosForm.get('observacao')?.hasError('required')">Observação é obrigatória</mat-error>
       </mat-form-field>
-      <button mat-raised-button color="primary" type="submit" [disabled]="processosForm.valid">Atualizar</button>
+      <button mat-raised-button color="primary" type="submit" >Atualizar</button>
     </form>
   </mat-card>
   <footer><img src="/front/public/PREFEITURA_2.png" alt="SPRegula"></footer>

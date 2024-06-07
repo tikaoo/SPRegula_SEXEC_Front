@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment.dev';
 import { IProcessosSexec } from '../../Model/processos';
-import { Observable } from 'rxjs';
+import { Observable, catchError, map, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -21,8 +21,22 @@ public getProcessos(): Observable<IProcessosSexec[]> {
   public getProcessoId(idProcesso: number):Observable<IProcessosSexec>{
     return this.http.get<IProcessosSexec>(`${this.baseURL}/${idProcesso}`)
   }
-  public getProcessoSei(SEI: string):Observable<IProcessosSexec>{
-    return this.http.get<IProcessosSexec>(`${this.baseURL}/spregula/${SEI}`)
+  public getProcessoSei(SEI: string): Observable<IProcessosSexec> {
+    return this.http.get<IProcessosSexec[]>(`${this.baseURL}/spregula/${SEI}`)
+      .pipe(
+        catchError(error => {
+          // Trate erros HTTP aqui, se necessário
+          console.error('Erro ao buscar processo:', error);
+          return throwError(error);
+        }),
+        map(response => {
+          if (response && response.length > 0) {
+            return response[0];
+          } else {
+            throw new Error('Nenhum processo encontrado com o ID fornecido.');
+          }
+        })
+      );
   }
   public deleteProcesso(idProcesso: number): Observable<void>{
     return this.http.delete<void>(`${this.baseURL}/${idProcesso}`)

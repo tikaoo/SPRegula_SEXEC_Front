@@ -52,7 +52,7 @@ export class EditarProcessosComponent implements OnInit {
       data_retorno: ['', Validators.required],
       tm_resposta: ['', Validators.required],
       status: ['', Validators.required],
-      informacoes_tecnica: ['', Validators.required],
+      informacoes_tecnicas: ['', Validators.required],
       ponto_sei_enviado_externo: ['', Validators.required],
       data_envio_externo: ['', Validators.required],
       data_preenchimento: ['', Validators.required],
@@ -62,13 +62,12 @@ export class EditarProcessosComponent implements OnInit {
 
 
   ngOnInit(): void {
-    const SEI: string = this.route.snapshot.paramMap.get('SEI') || '';
-    if (SEI) {
-      this.http.getProcessoSei(SEI).subscribe(
-        (p) => {
-          this.process = p;
-          console.log('Processo recebido:', this.process);
-          this.processosForm.setValue({
+    const iSEI: string = this.route.snapshot.paramMap.get('SEI') || '';
+    if (iSEI) {
+      this.http.getProcessoSei(iSEI).subscribe(
+        (response) => {
+          this.process = response;
+            this.processosForm.setValue({
             SEI: this.process.SEI,
             requerente: this.process.requerente,
             setor_requerente: this.process.setor_requerente,
@@ -87,7 +86,7 @@ export class EditarProcessosComponent implements OnInit {
             data_retorno: this.process.data_retorno,
             tm_resposta: this.process.tm_resposta,
             status: this.process.status,
-            informacoes_tecnica: this.process.informacoes_tecnica,
+            informacoes_tecnicas: this.process.informacoes_tecnicas,
             ponto_sei_enviado_externo: this.process.ponto_sei_enviado_externo,
             data_envio_externo: this.process.data_envio_externo,
             data_preenchimento: this.process.data_preenchimento,
@@ -100,7 +99,7 @@ export class EditarProcessosComponent implements OnInit {
   atualizar(): void {
     const numeroSei: IProcessosSexec = this.processosForm.value as IProcessosSexec
     this.http
-      .editProcesso(this.process)
+      .editProcesso(numeroSei)
       .subscribe(
         (result) => {
           Swal.fire(
