@@ -1,6 +1,11 @@
 <div class="flex-container">
-  <button mat-mini-fab color="primary" routerLink="/processos/sexec" aria-label="Voltar aos processos">
-    Voltar
+  <button mat-mini-fab
+  class="add"
+  color="primary"
+  (click)="voltarAosProcessos()">
+    <mat-icon>
+      arrow_left
+    </mat-icon>
   </button>
   <mat-card>
     <h1>Editar Processos</h1>

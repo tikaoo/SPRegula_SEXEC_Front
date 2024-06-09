@@ -15,7 +15,7 @@ export const MY_DATE_FORMATS = {
     dateInput: 'YYYY/MM/DD',
   },
   display: {
-    dateInput: 'YYYY/MM/DD',
+    dateInput: 'DD/MM/YYYY',
   },
 };
 
@@ -34,9 +34,10 @@ export const MY_DATE_FORMATS = {
 export class CadastrarProcessosComponent implements OnInit {
   mainForm: FormGroup ;
   private dirty: boolean = false;
+  isPrazoRespostaReadonly: boolean = true;
 
   constructor(private fb: FormBuilder,
-    private route: Router,
+    private router: Router,
     private http: ProcessosHttpService,
     private datePipe: DatePipe
 
@@ -53,56 +54,94 @@ export class CadastrarProcessosComponent implements OnInit {
       descricao_solicitacao: ['', Validators.required],
       ponto_sei_enviado_interno: ['', Validators.required],
       data_envio_interno: ['', Validators.required],
-      prazo_resposta: ['', Validators.required],
+      prazo_resposta: [''],
       tm_encaminhamento: ['', Validators.required],
       dias_vencer: ['', Validators.required],
       situacao: ['', Validators.required],
       data_retorno: ['', Validators.required],
       tm_resposta: ['', Validators.required],
       status: ['', Validators.required],
-      informacoes_tecnica: ['', Validators.required],
+      informacoes_tecnicas: ['', Validators.required],
       ponto_sei_enviado_externo: ['', Validators.required],
       data_envio_externo: ['', Validators.required],
       data_preenchimento: ['', Validators.required],
-      observacao: ['', Validators.required]
+      observacao: ['']
+    });
+    this.mainForm.get('data_entrada_sexec')!.valueChanges.subscribe((value) => {
+      this.onRequerenteChange(this.mainForm.get('requerente')!.value);
     });
   }
 
   ngOnInit(): void {}
 
 
-  cadastrarProcess(){
+  cadastrarProcess() {
     const formValues = this.mainForm.value;
 
     // Transformar as datas para o formato 'yyyy-MM-dd'
-    formValues.data_entrada_regula = this.datePipe.transform(formValues.data_entrada_regula, 'yyyy-MM-dd');
-    formValues.data_entrada_sexec = this.datePipe.transform(formValues.data_entrada_sexec, 'yyyy-MM-dd');
-    formValues.data_envio_interno = this.datePipe.transform(formValues.data_envio_interno, 'yyyy-MM-dd');
-    formValues.prazo_resposta = this.datePipe.transform(formValues.prazo_resposta, 'yyyy-MM-dd');
-    formValues.data_retorno = this.datePipe.transform(formValues.data_retorno, 'yyyy-MM-dd');
-    formValues.data_envio_externo = this.datePipe.transform(formValues.data_envio_externo, 'yyyy-MM-dd');
-    formValues.data_preenchimento = this.datePipe.transform(formValues.data_preenchimento, 'yyyy-MM-dd');
-    
-    const process: IProcessosSexec = this.mainForm.value as IProcessosSexec;
-    this.http.addProcesso(process).subscribe(()=>{
-      Swal.fire('Sucesso!', 'Processo cadastrado com sucesso', 'success');
-      this.route.navigateByUrl('/processos/sexec')
-      this.dirty = false;
+    formValues.data_entrada_regula = this.transformDate(formValues.data_entrada_regula);
+    formValues.data_entrada_sexec = this.transformDate(formValues.data_entrada_sexec);
+    formValues.data_envio_interno = this.transformDate(formValues.data_envio_interno);
+    formValues.data_retorno = this.transformDate(formValues.data_retorno);
+    formValues.data_envio_externo = this.transformDate(formValues.data_envio_externo);
+    formValues.data_preenchimento = this.transformDate(formValues.data_preenchimento);
+    formValues.prazo_resposta = this.transformDate(formValues.prazo_resposta);
+    formValues.SEI = formValues.SEI.replace(/[\\s./]/g, '');
+    formValues.requerente = formValues.requerente.toLowerCase();
+
+    const process: IProcessosSexec = formValues as IProcessosSexec;
+    this.http.addProcesso(process).subscribe(() => {
+        Swal.fire('Sucesso!', 'Processo cadastrado com sucesso', 'success');
+        this.router.navigateByUrl('/processos');
+        this.dirty = false;
     },
-    (e)=>{
-      if(e.status===500){
-        Swal.fire('Erro!', 'SEI já cadastrado', 'error');
-      }else if (e.status === 409) {
-        Swal.fire('Erro!', 'CPF Inválido', 'error');
-      }else {
-        Swal.fire('Erro!', 'Falha ao adicionar processo.', 'error');
-      }
-    }
-   )
-  }
+    (e) => {
+        if (e.status === 500) {
+            Swal.fire('Erro!', 'SEI já cadastrado', 'error');
+        } else if (e.status === 409) {
+            Swal.fire('Erro!', 'SEI Inválido', 'error');
+        } else {
+            Swal.fire('Erro!', 'Falha ao adicionar processo.', 'error');
+        }
+    });
+}
   dirtyInput() {
     this.dirty = true;
   }
 
+  voltarAosProcessos(): void {
+    this.router.navigate(['/processos']);
+  }
+
+  onRequerenteChange(value: string) {
+    this.isPrazoRespostaReadonly = value.toLowerCase() !== 'tcm';
+    const dataEntradaSexecValue = this.mainForm.get('data_entrada_sexec')!.value;
+    if (this.isPrazoRespostaReadonly && dataEntradaSexecValue) {
+      const dataEntradaSexec = new Date(dataEntradaSexecValue);
+      if (!isNaN(dataEntradaSexec.getTime())) {
+        dataEntradaSexec.setDate(dataEntradaSexec.getDate() + 15);
+        const transformedDate = this.datePipe.transform(dataEntradaSexec, 'yyyy-MM-dd');
+        this.mainForm.patchValue({
+          prazo_resposta: transformedDate
+        });
+      } else {
+        console.error('Invalid date for data_entrada_sexec:', dataEntradaSexecValue);
+      }
+    } else {
+      this.mainForm.patchValue({
+        prazo_resposta: ''
+      });
+    }
+  }
+
+  private transformDate(date: any): string | null {
+    if (date) {
+      const parsedDate = new Date(date);
+      if (!isNaN(parsedDate.getTime())) {
+        return this.datePipe.transform(parsedDate, 'yyyy-MM-dd');
+      }
+    }
+    return null;
+  }
 
 }

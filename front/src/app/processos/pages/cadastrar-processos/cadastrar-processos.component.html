@@ -1,6 +1,8 @@
 <div class="flex-container">
-  <button mat-mini-fab color="primary" routerLink="/processos/sexec" aria-label="Voltar aos processos">
-    Voltar
+  <button mat-mini-fab color="primary"  aria-label="Voltar aos processos" (click)="voltarAosProcessos()">
+    <mat-icon>
+      arrow_left
+    </mat-icon>
   </button>
   <mat-card>
     <h1>Cadastrar processos</h1>
@@ -11,8 +13,8 @@
         <mat-error *ngIf="mainForm.get('SEI')?.hasError('required')">SEI é obrigatório</mat-error>
       </mat-form-field>
       <mat-form-field appearance="outline">
-        <mat-label>Requerente</mat-label>
-        <input matInput formControlName="requerente" required>
+        <mat-label>Orgão</mat-label >
+        <input matInput formControlName="requerente" required id="requerente" (ngModelChange)="onRequerenteChange($event)">
         <mat-error *ngIf="mainForm.get('requerente')?.hasError('required')">Requerente é obrigatório</mat-error>
       </mat-form-field>
       <mat-form-field appearance="outline">
@@ -68,10 +70,10 @@
       </mat-form-field>
       <mat-form-field appearance="outline">
         <mat-label>Prazo de Resposta</mat-label>
-        <input matInput [matDatepicker]="prazoResposta" formControlName="prazo_resposta" required>
+        <input matInput [matDatepicker]="prazoResposta" formControlName="prazo_resposta" required [readonly]="isPrazoRespostaReadonly">
         <mat-datepicker-toggle matSuffix [for]="prazoResposta"></mat-datepicker-toggle>
-        <mat-datepicker #prazoResposta></mat-datepicker>
-        <mat-error *ngIf="mainForm.get('prazo_resposta')?.hasError('required')">Prazo de Resposta é obrigatório</mat-error>
+        <mat-datepicker #prazoResposta></mat-datepicker >
+        <mat-error >Prazo de Resposta é obrigatório</mat-error>
       </mat-form-field>
       <mat-form-field appearance="outline">
         <mat-label>Tempo de Encaminhamento</mat-label>
@@ -107,8 +109,8 @@
       </mat-form-field>
       <mat-form-field appearance="outline">
         <mat-label>Informações Técnicas</mat-label>
-        <textarea matInput formControlName="informacoes_tecnica" required></textarea>
-        <mat-error *ngIf="mainForm.get('informacoes_tecnica')?.hasError('required')">Informações Técnicas são obrigatórias</mat-error>
+        <textarea matInput formControlName="informacoes_tecnicas" required></textarea>
+        <mat-error *ngIf="mainForm.get('informacoes_tecnicas')?.hasError('required')">Informações Técnicas são obrigatórias</mat-error>
       </mat-form-field>
       <mat-form-field appearance="outline">
         <mat-label>Ponto SEI Enviado Externo</mat-label>
@@ -131,8 +133,8 @@
       </mat-form-field>
       <mat-form-field appearance="outline">
         <mat-label>Observação</mat-label>
-        <textarea matInput formControlName="observacao" required></textarea>
-        <mat-error *ngIf="mainForm.get('observacao')?.hasError('required')">Observação é obrigatória</mat-error>
+        <textarea matInput formControlName="observacao" ></textarea>
+        <mat-error >Observação é obrigatória</mat-error>
       </mat-form-field>
       <button mat-raised-button color="primary" type="submit">Enviar</button>
     </form>

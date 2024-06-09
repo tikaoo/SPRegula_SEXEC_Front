@@ -1,4 +1,4 @@
-import { CommonModule} from '@angular/common';
+import { CommonModule, DatePipe} from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
@@ -18,7 +18,7 @@ import Swal from 'sweetalert2';
   templateUrl: './editar-processos.component.html',
   styleUrl: './editar-processos.component.css',
   providers: [
-    { provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS }
+    { provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS },DatePipe
   ]
 })
 export class EditarProcessosComponent implements OnInit {
@@ -30,6 +30,7 @@ export class EditarProcessosComponent implements OnInit {
     private router: Router,
     private http: ProcessosHttpService,
     private route: ActivatedRoute,
+    private datePipe: DatePipe
 
 
   ) {
@@ -68,7 +69,7 @@ export class EditarProcessosComponent implements OnInit {
         (response) => {
           this.process = response;
             this.processosForm.setValue({
-            SEI: this.process.SEI,
+            SEI: this.process.SEI.replace(/[\\s./]/g, '') ,
             requerente: this.process.requerente,
             setor_requerente: this.process.setor_requerente,
             data_entrada_regula: this.process.data_entrada_regula,
@@ -97,6 +98,16 @@ export class EditarProcessosComponent implements OnInit {
     }
   }
   atualizar(): void {
+    const formValues = this.processosForm.value;
+    formValues.data_entrada_regula = this.datePipe.transform(formValues.data_entrada_regula, 'yyyy-MM-dd');
+    formValues.data_entrada_sexec = this.datePipe.transform(formValues.data_entrada_sexec, 'yyyy-MM-dd');
+    formValues.data_envio_interno = this.datePipe.transform(formValues.data_envio_interno, 'yyyy-MM-dd');
+    formValues.prazo_resposta = this.datePipe.transform(formValues.prazo_resposta, 'yyyy-MM-dd');
+    formValues.data_retorno = this.datePipe.transform(formValues.data_retorno, 'yyyy-MM-dd');
+    formValues.data_envio_externo = this.datePipe.transform(formValues.data_envio_externo, 'yyyy-MM-dd');
+    formValues.data_preenchimento = this.datePipe.transform(formValues.data_preenchimento, 'yyyy-MM-dd');
+    formValues.SEI.replace(/[\\s./]/g, '')
+
     const numeroSei: IProcessosSexec = this.processosForm.value as IProcessosSexec
     this.http
       .editProcesso(numeroSei)
@@ -108,7 +119,7 @@ export class EditarProcessosComponent implements OnInit {
             'success'
           )
           this.processosForm.reset()
-          this.router.navigateByUrl('/processos/sexec')
+          this.router.navigateByUrl('/processos')
         },
         () => {
           Swal.fire(
@@ -119,6 +130,11 @@ export class EditarProcessosComponent implements OnInit {
           )
         }
       )
+
+  }
+
+  voltarAosProcessos(): void {
+    this.router.navigate(['/processos']);
   }
 
 

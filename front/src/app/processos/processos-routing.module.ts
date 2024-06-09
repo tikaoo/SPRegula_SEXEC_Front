@@ -3,11 +3,10 @@ import { RouterModule, Routes } from '@angular/router';
 import { CadastrarProcessosComponent } from './pages/cadastrar-processos/cadastrar-processos.component';
 import { EditarProcessosComponent } from './pages/editar-processos/editar-processos.component';
 import { ListarProcessosComponent } from './pages/listar-processos/listar-processos.component';
-import { ProcessoComponent } from './processo/processo.component';
 
 const routes: Routes = [
   {
-    path: 'cadastrar-processos',
+    path: 'spregula/cadastrar-processos',
     component: CadastrarProcessosComponent
   },
   {

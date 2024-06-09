@@ -33,7 +33,7 @@ public getProcessos(): Observable<IProcessosSexec[]> {
           if (response && response.length > 0) {
             return response[0];
           } else {
-            throw new Error('Nenhum processo encontrado com o ID fornecido.');
+            throw new Error('Nenhum processo encontrado com o SEI fornecido.');
           }
         })
       );
@@ -48,7 +48,7 @@ public getProcessos(): Observable<IProcessosSexec[]> {
     return this.http.post<IProcessosSexec>(`${this.baseURL}`,processo)
   }
   public editProcesso(processo: IProcessosSexec): Observable<IProcessosSexec>{
-    return this.http.put<IProcessosSexec>(`${this.baseURL}/spregula/${processo.SEI}`,processo)
+    return this.http.put<IProcessosSexec>(`${this.baseURL}/spregula/edit/${processo.SEI}`,processo)
   }
 }
 

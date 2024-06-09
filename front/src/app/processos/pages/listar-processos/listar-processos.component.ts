@@ -7,21 +7,23 @@ import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { ProcessosHttpService } from '../../services/processos-http.service';
 import Swal from 'sweetalert2';
+import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-listar-processos',
   standalone: true,
-  imports: [MaterialModule, RouterModule, MatTableModule, MatSortModule, MatPaginatorModule],
+  imports: [MaterialModule, RouterModule, MatTableModule, MatSortModule, MatPaginatorModule,NgIf],
   templateUrl: './listar-processos.component.html',
   styleUrl: './listar-processos.component.css'
 })
 export class ListarProcessosComponent implements OnInit, AfterViewInit {
 
   processos: IProcessosSexec[] = []
+  noProcessosMessage: string = '';
 
   columns: string[] = ['idProcesso', 'SEI', 'requerente', 'setor_requerente', 'data_entrada_regula', 'data_entrada_sexec', 'unidade_destino', 'objeto', 'tipo_solicitacao',
     'descricao_solicitacao', 'ponto_sei_enviado_interno', 'data_envio_interno', 'prazo_resposta', 'tm_encaminhamento', 'dias_vencer', 'situacao', 'data_retorno', 'tm_resposta', 'status',
-    'informacoes_tecnica', 'ponto_sei_enviado_externo', 'data_envio_externo', 'data_preenchimento', 'observacao', 'actions']
+    'informacoes_tecnicas', 'ponto_sei_enviado_externo', 'data_envio_externo', 'data_preenchimento', 'observacao', 'actions']
 
 
   dataSource = new MatTableDataSource(this.processos);
@@ -38,7 +40,6 @@ export class ListarProcessosComponent implements OnInit, AfterViewInit {
 
   }
 
-
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
@@ -53,12 +54,24 @@ export class ListarProcessosComponent implements OnInit, AfterViewInit {
     }
   }
 
-  recoveryProcessos() {
+  recoveryProcessos(): void {
     this.processHttpService.getProcessos().subscribe(
       (processSexec) => {
-        this.processos = processSexec
+        this.processos = processSexec;
+        if (this.processos.length === 0) {
+          Swal.fire({
+            title: 'Nenhum processo encontrado.',
+            icon: 'warning'
+          });
+        } else {
+          this.noProcessosMessage = '';
+        }
+      },
+      (error) => {
+        console.error('Erro ao recuperar processos:', error);
+        this.noProcessosMessage = 'Erro ao recuperar processos.';
       }
-    )
+    );
   }
 
   deleteProcess(SEI: string): void {
@@ -76,7 +89,7 @@ export class ListarProcessosComponent implements OnInit, AfterViewInit {
             this.router
               .navigateByUrl('/', { skipLocationChange: true })
               .then(() => {
-                this.router.navigate(['/processos/sexec']);
+                this.router.navigate(['/processos']);
               });
           },
           (e) => {
