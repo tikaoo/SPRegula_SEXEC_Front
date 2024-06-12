@@ -70,7 +70,7 @@
       </mat-form-field>
       <mat-form-field appearance="outline">
         <mat-label>Prazo de Resposta</mat-label>
-        <input matInput [matDatepicker]="prazoResposta" formControlName="prazo_resposta" required [readonly]="isPrazoRespostaReadonly">
+        <input matInput [matDatepicker]="prazoResposta" formControlName="prazo_resposta" required [disabled]="isPrazoRespostaReadonly">
         <mat-datepicker-toggle matSuffix [for]="prazoResposta"></mat-datepicker-toggle>
         <mat-datepicker #prazoResposta></mat-datepicker >
         <mat-error >Prazo de Resposta é obrigatório</mat-error>
@@ -87,46 +87,52 @@
       </mat-form-field>
       <mat-form-field appearance="outline">
         <mat-label>Situação</mat-label>
-        <input matInput formControlName="situacao" required>
+        <mat-select>
+          <mat-option value="one">Vencido</mat-option>
+          <mat-option value="two">No Prazo</mat-option>
+          <mat-option value="three">Respondido</mat-option>
+          <mat-option value="four">Próximo ao Prazo</mat-option>
+        </mat-select>
         <mat-error *ngIf="mainForm.get('situacao')?.hasError('required')">Situação é obrigatória</mat-error>
       </mat-form-field>
       <mat-form-field appearance="outline">
         <mat-label>Data de Retorno</mat-label>
-        <input matInput [matDatepicker]="dataRetorno" formControlName="data_retorno" required>
+        <input matInput [matDatepicker]="dataRetorno" formControlName="data_retorno" >
         <mat-datepicker-toggle matSuffix [for]="dataRetorno"></mat-datepicker-toggle>
         <mat-datepicker #dataRetorno></mat-datepicker>
-        <mat-error *ngIf="mainForm.get('data_retorno')?.hasError('required')">Data de Retorno é obrigatória</mat-error>
       </mat-form-field>
       <mat-form-field appearance="outline">
         <mat-label>Tempo de Resposta</mat-label>
-        <input matInput type="number" formControlName="tm_resposta" required>
-        <mat-error *ngIf="mainForm.get('tm_resposta')?.hasError('required')">Tempo de Resposta é obrigatório</mat-error>
+        <input matInput type="number" formControlName="tm_resposta" >
       </mat-form-field>
       <mat-form-field appearance="outline">
         <mat-label>Status</mat-label>
-        <input matInput formControlName="status" required>
-        <mat-error *ngIf="mainForm.get('status')?.hasError('required')">Status é obrigatório</mat-error>
+        <mat-select>
+          <mat-option value="one">Em análise de viabilidade técnica</mat-option>
+          <mat-option value="two">Providência e Custódias</mat-option>
+          <mat-option value="three">Respondido</mat-option>
+        </mat-select>
       </mat-form-field>
       <mat-form-field appearance="outline">
         <mat-label>Informações Técnicas</mat-label>
         <textarea matInput formControlName="informacoes_tecnicas" required></textarea>
-        <mat-error *ngIf="mainForm.get('informacoes_tecnicas')?.hasError('required')">Informações Técnicas são obrigatórias</mat-error>
+
       </mat-form-field>
       <mat-form-field appearance="outline">
         <mat-label>Ponto SEI Enviado Externo</mat-label>
-        <input matInput formControlName="ponto_sei_enviado_externo" required>
-        <mat-error *ngIf="mainForm.get('ponto_sei_enviado_externo')?.hasError('required')">Ponto SEI Enviado Externo é obrigatório</mat-error>
+        <input matInput formControlName="ponto_sei_enviado_externo" >
+
       </mat-form-field>
       <mat-form-field appearance="outline">
         <mat-label>Data de Envio Externo</mat-label>
-        <input matInput [matDatepicker]="dataEnvioExterno" formControlName="data_envio_externo" required>
+        <input matInput [matDatepicker]="dataEnvioExterno" formControlName="data_envio_externo" >
         <mat-datepicker-toggle matSuffix [for]="dataEnvioExterno"></mat-datepicker-toggle>
         <mat-datepicker #dataEnvioExterno></mat-datepicker>
-        <mat-error *ngIf="mainForm.get('data_envio_externo')?.hasError('required')">Data de Envio Externo é obrigatória</mat-error>
+
       </mat-form-field>
       <mat-form-field appearance="outline">
         <mat-label>Data de Preenchimento</mat-label>
-        <input matInput [matDatepicker]="dataPreenchimento" formControlName="data_preenchimento" required>
+        <input matInput [matDatepicker]="dataPreenchimento" formControlName="data_preenchimento" required >
         <mat-datepicker-toggle matSuffix [for]="dataPreenchimento"></mat-datepicker-toggle>
         <mat-datepicker #dataPreenchimento></mat-datepicker>
         <mat-error *ngIf="mainForm.get('data_preenchimento')?.hasError('required')">Data de Preenchimento é obrigatória</mat-error>
@@ -134,7 +140,6 @@
       <mat-form-field appearance="outline">
         <mat-label>Observação</mat-label>
         <textarea matInput formControlName="observacao" ></textarea>
-        <mat-error >Observação é obrigatória</mat-error>
       </mat-form-field>
       <button mat-raised-button color="primary" type="submit">Enviar</button>
     </form>

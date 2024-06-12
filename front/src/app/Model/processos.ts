@@ -1,5 +1,3 @@
-import { Data } from "@angular/router";
-
 export interface IProcessosSexec {
   idProcesso?:number,
   SEI: string,
@@ -25,4 +23,11 @@ export interface IProcessosSexec {
   data_envio_externo: Date,
   data_preenchimento: Date,
   observacao: string
+}
+
+export interface DataRecord {
+  prazoResposta: Date | undefined;
+  status: string;
+  dataHoje: Date;
+  dataEnvioInterno: Date;
 }
