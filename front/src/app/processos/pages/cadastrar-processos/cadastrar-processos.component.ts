@@ -6,7 +6,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { Router } from '@angular/router';
 import { ProcessosHttpService } from '../../services/processos-http.service';
 import Swal from 'sweetalert2';
-import { IProcessosSexec,DataRecord } from '../../../Model/processos';
+import { IProcessosSexec, DataRecord } from '../../../Model/processos';
 import { MAT_DATE_FORMATS } from '@angular/material/core';
 
 export const MY_DATE_FORMATS = {
@@ -17,8 +17,6 @@ export const MY_DATE_FORMATS = {
     dateInput: 'DD/MM/YYYY',
   },
 };
-
-
 @Component({
   selector: 'app-cadastrar-processos',
   standalone: true,
@@ -28,15 +26,12 @@ export const MY_DATE_FORMATS = {
   providers: [
     { provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS }, DatePipe
   ]
-
 })
 export class CadastrarProcessosComponent implements OnInit {
   mainForm: FormGroup;
   private dirty: boolean = false;
   isPrazoRespostaReadonly: boolean = true;
   resultado: string | number | null = null;
-
-
 
   constructor(private fb: FormBuilder,
     private router: Router,
@@ -57,32 +52,27 @@ export class CadastrarProcessosComponent implements OnInit {
       ponto_sei_enviado_interno: ['', Validators.required],
       data_envio_interno: ['', Validators.required],
       prazo_resposta: [{ value: '', disabled: true }],
-      tm_encaminhamento: [0, Validators.required],
-      dias_vencer: ['', Validators.required],
-      situacao: ['', Validators.required],
-      data_retorno: [0],
-      tm_resposta: [0],
-      status: ['', Validators.required],
-      informacoes_tecnicas: ['Aguardando Retorno da área responsável', Validators.required],
-      ponto_sei_enviado_externo: [''],
-      data_envio_externo: [''],
+      tm_encaminhamento: [{ value: 0, disabled: true }],
+      dias_vencer: [{ value: '', disabled: true }, Validators.required],
+      situacao: [{ value: 'Aguardando retorno', disabled: true },],
+      data_retorno: [{ value: '', disabled: true }],
+      tm_resposta: [{ value: 0, disabled: true }],
+      status: [{ value: 'Lançado', disabled: true }, Validators.required],
+      informacoes_tecnicas: [{ value: 'Aguardando Retorno', disabled: true }, Validators.required],
+      ponto_sei_enviado_externo: [{ value: '', disabled: true }, Validators.required],
+      data_envio_externo: [{ value: '', disabled: true }, Validators.required],
       data_preenchimento: [{ value: '', disabled: true }, Validators.required],
       observacao: ['']
     });
-    this.mainForm.get('data_entrada_sexec')!.valueChanges.subscribe((value) => {
-      this.onRequerenteChange(this.mainForm.get('requerente')!.value);
-    });
-
+    this.mainForm.get('data_envio_interno')?.valueChanges.subscribe(() => this.calcularTE());
+    this.mainForm.get('requerente')?.valueChanges.subscribe((value) => this.onRequerenteChange(value));
+    this.mainForm.get('prazo_resposta')?.valueChanges.subscribe(() => this.calcularDiasVencer());
   }
-
   ngOnInit(): void {
     this.dataAtual()
   }
-
-
   cadastrarProcess() {
     const formValues = this.mainForm.value;
-
     // Transformar as datas para o formato 'yyyy-MM-dd'
     formValues.data_entrada_regula = this.transformDate(formValues.data_entrada_regula);
     formValues.data_entrada_sexec = this.transformDate(formValues.data_entrada_sexec);
@@ -95,14 +85,13 @@ export class CadastrarProcessosComponent implements OnInit {
 
     const process: IProcessosSexec = formValues as IProcessosSexec;
 
-    const dataRecord :DataRecord= {
+    const dataRecord: DataRecord = {
       prazoResposta: process.prazo_resposta,
       status: process.status,
       dataHoje: new Date(),
       dataEnvioInterno: process.data_envio_interno
     };
     this.resultado = this.calcularPrazo(dataRecord);
-
 
     this.http.addProcesso(process).subscribe(() => {
       Swal.fire('Sucesso!', 'Processo cadastrado com sucesso', 'success');
@@ -122,11 +111,9 @@ export class CadastrarProcessosComponent implements OnInit {
   dirtyInput() {
     this.dirty = true;
   }
-
   voltarAosProcessos(): void {
     this.router.navigate(['/processos']);
   }
-
   onRequerenteChange(value: string) {
     this.isPrazoRespostaReadonly = value.toLowerCase() !== 'tcm';
     const dataEntradaSexecValue = this.mainForm.get('data_entrada_sexec')!.value;
@@ -150,7 +137,6 @@ export class CadastrarProcessosComponent implements OnInit {
       this.mainForm.get('prazo_resposta')!.enable();
     }
   }
-
   private transformDate(date: any): string | null {
     if (date) {
       const parsedDate = new Date(date);
@@ -160,31 +146,62 @@ export class CadastrarProcessosComponent implements OnInit {
     }
     return null;
   }
-
   dataAtual() {
     const today = this.datePipe.transform(new Date(), 'yyyy-MM-dd');
     this.mainForm.patchValue({
       data_preenchimento: today
     })
   }
-  calcularPrazo(dataRecord : DataRecord) {
-    const {prazoResposta,status,dataHoje} = dataRecord
+  calcularPrazo(dataRecord: DataRecord) {
+    const { prazoResposta, status, dataHoje } = dataRecord
 
-    if(!prazoResposta){
+    if (!prazoResposta) {
       return ""
     }
-
-    if(status === "Respondido"){
+    if (status === "Respondido") {
       return 0
     }
     const diferencaPrazo = prazoResposta.getTime() - dataHoje.getTime();
-  if (diferencaPrazo < 0) {
-    return Math.abs(diferencaPrazo / (1000 * 60 * 60 * 24));
-  } else {
-    return diferencaPrazo / (1000 * 60 * 60 * 24);
+    if (diferencaPrazo < 0) {
+      return Math.abs(diferencaPrazo / (1000 * 60 * 60 * 24));
+    } else {
+      return diferencaPrazo / (1000 * 60 * 60 * 24);
+    }
+  }
+  calcularTE() {
+    const dataEntradaSexec = this.mainForm.get('data_entrada_sexec')!.value;
+    const dataEnvioInterno = this.mainForm.get('data_envio_interno')!.value;
+
+    if (dataEntradaSexec && dataEnvioInterno) {
+      const dataEntradaSexecDate = new Date(dataEntradaSexec);
+      const dataEnvioInternoDate = new Date(dataEnvioInterno);
+
+      if (!isNaN(dataEntradaSexecDate.getTime()) && !isNaN(dataEnvioInternoDate.getTime())) {
+        const diffInMs = dataEntradaSexecDate.getTime() - dataEnvioInternoDate.getTime();
+        const diffInDays = diffInMs / (1000 * 60 * 60 * 24) * -1;
+
+        this.mainForm.patchValue({
+          tm_encaminhamento: Math.round(diffInDays)
+        });
+      }
+    }
+  }
+  calcularDiasVencer() {
+    const datahoje = this.mainForm.get('data_preenchimento')!.value;
+    const prazoResposta = this.mainForm.get('prazo_resposta')!.value;
+
+    if (datahoje && prazoResposta) {
+      const dataEntradaSexecDate = new Date(datahoje);
+      const dataEnvioInternoDate = new Date(prazoResposta);
+
+      if (!isNaN(dataEntradaSexecDate.getTime()) && !isNaN(dataEnvioInternoDate.getTime())) {
+        const diffInMs = dataEntradaSexecDate.getTime() - dataEnvioInternoDate.getTime();
+        const diffInDays = diffInMs / (1000 * 60 * 60 * 24) * -1;
+
+        this.mainForm.patchValue({
+          dias_vencer: Math.round(diffInDays)
+        });
+      }
+    }
   }
 }
-
-  }
-
-

@@ -14,7 +14,7 @@
       </mat-form-field>
       <mat-form-field appearance="outline">
         <mat-label>Orgão</mat-label >
-        <input matInput formControlName="requerente" required id="requerente" (ngModelChange)="onRequerenteChange($event)">
+        <input matInput formControlName="requerente" required id="requerente" >
         <mat-error *ngIf="mainForm.get('requerente')?.hasError('required')">Requerente é obrigatório</mat-error>
       </mat-form-field>
       <mat-form-field appearance="outline">
@@ -87,7 +87,7 @@
       </mat-form-field>
       <mat-form-field appearance="outline">
         <mat-label>Situação</mat-label>
-        <mat-select>
+        <mat-select disabled="">
           <mat-option value="one">Vencido</mat-option>
           <mat-option value="two">No Prazo</mat-option>
           <mat-option value="three">Respondido</mat-option>
@@ -105,14 +105,12 @@
         <mat-label>Tempo de Resposta</mat-label>
         <input matInput type="number" formControlName="tm_resposta" >
       </mat-form-field>
-      <mat-form-field appearance="outline">
-        <mat-label>Status</mat-label>
-        <mat-select>
-          <mat-option value="one">Em análise de viabilidade técnica</mat-option>
-          <mat-option value="two">Providência e Custódias</mat-option>
-          <mat-option value="three">Respondido</mat-option>
-        </mat-select>
-      </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Situação</mat-label>
+          <input matInput formControlName="situacao" >
+        </mat-form-field>
+
       <mat-form-field appearance="outline">
         <mat-label>Informações Técnicas</mat-label>
         <textarea matInput formControlName="informacoes_tecnicas" required></textarea>

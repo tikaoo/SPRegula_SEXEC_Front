@@ -8,6 +8,7 @@ import { NgModule } from '@angular/core'
     loadChildren: async () => { // Lazy Loading
       const m = await import('./processos/processos.module');
       return m.ProcessosModule;
+
     }
   },
  ];
