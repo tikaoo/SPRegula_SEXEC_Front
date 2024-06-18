@@ -1,22 +1,16 @@
 <div class="flex-container column">
   <mat-form-field>
     <mat-label>Pesquisa</mat-label>
-    <input matInput (keyup)="applyFilter($event)"  #input>
+    <input matInput ((keypress))="applyFilter($event)"  #input>
   </mat-form-field>
   <div *ngIf="processos.length === 0 && !noProcessosMessage; else processosTable">
     <p>Nenhum processo encontrado.</p>
   </div>
   <ng-template #processosTable>
   <table mat-table  [dataSource] ='processos' matSort class="mat-elevation-z8">
-    <ng-container matColumnDef="idProcesso">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>#</th>
-      <td mat-cell *matCellDef="let process"> {{process.idProcesso}}</td>
-    </ng-container>
     <ng-container matColumnDef="SEI">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>SEI</th>
-      <td mat-cell *matCellDef="let process">
-          {{ process.SEI}}
-      </td>
+      <td mat-cell *matCellDef="let process">{{ process.SEI}}</td>
     </ng-container>
     <ng-container matColumnDef="requerente">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Orgão</th>
@@ -28,11 +22,11 @@
     </ng-container>
     <ng-container matColumnDef="data_entrada_regula">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Data (E) Regula</th>
-      <td mat-cell *matCellDef="let process">{{ process.data_entrada_regula }}</td>
+      <td mat-cell *matCellDef="let process">{{ process.data_entrada_regula | date : 'dd/MM/yyyy'}}</td>
     </ng-container>
     <ng-container matColumnDef="data_entrada_sexec">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Data (E) Sexec</th>
-      <td mat-cell *matCellDef="let process">{{ process.data_entrada_sexec }}</td>
+      <td mat-cell *matCellDef="let process">{{ process.data_entrada_sexec | date : 'dd/MM/yyyy'}}</td>
     </ng-container>
     <ng-container matColumnDef="unidade_destino">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Unidade Destino</th>
@@ -56,11 +50,11 @@
     </ng-container>
     <ng-container matColumnDef="data_envio_interno">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Data Envio(I)</th>
-      <td mat-cell *matCellDef="let process">{{ process.data_envio_interno }}</td>
+      <td mat-cell *matCellDef="let process">{{ process.data_envio_interno | date : 'dd/MM/yyyy' }}</td>
     </ng-container>
     <ng-container matColumnDef="prazo_resposta">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Prazo Resposta</th>
-      <td mat-cell *matCellDef="let process">{{ process.prazo_resposta }}</td>
+      <td mat-cell *matCellDef="let process">{{ process.prazo_resposta | date : 'dd/MM/yyyy'}}</td>
     </ng-container>
     <ng-container matColumnDef="tm_encaminhamento">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Tempo de Encaminhamento</th>
@@ -76,7 +70,7 @@
     </ng-container>
     <ng-container matColumnDef="data_retorno">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Data Retorno</th>
-      <td mat-cell *matCellDef="let process">{{ process.data_retorno }}</td>
+      <td mat-cell *matCellDef="let process">{{ process.data_retorno | date : 'dd/MM/yyyy' }}</td>
     </ng-container>
     <ng-container matColumnDef="tm_resposta">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Tempo Resposta</th>
@@ -88,7 +82,7 @@
     </ng-container>
     <ng-container matColumnDef="informacoes_tecnicas">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Informações Técnicas</th>
-      <td mat-cell *matCellDef="let process">{{ process.informacoes_tecnica }}</td>
+      <td mat-cell *matCellDef="let process">{{ process.informacoes_tecnicas }}</td>
     </ng-container>
     <ng-container matColumnDef="ponto_sei_enviado_externo">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Ponto SEI Enviado(E)</th>
@@ -96,11 +90,11 @@
     </ng-container>
     <ng-container matColumnDef="data_envio_externo">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Data de Envio(E)</th>
-      <td mat-cell *matCellDef="let process">{{ process.data_envio_externo }}</td>
+      <td mat-cell *matCellDef="let process">{{ process.data_envio_externo | date : 'dd/MM/yyyy' }}</td>
     </ng-container>
     <ng-container matColumnDef="data_preenchimento">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Data Preenchimento</th>
-      <td mat-cell *matCellDef="let process">{{ process.data_preenchimento }}</td>
+      <td mat-cell *matCellDef="let process">{{ process.data_preenchimento | date : 'dd/MM/yyyy'}}</td>
     </ng-container>
     <ng-container matColumnDef="observacao">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Observação</th>
@@ -118,7 +112,7 @@
       </td>
     </ng-container>
     <tr mat-header-row *matHeaderRowDef="columns"></tr>
-    <tr mat-row *matRowDef="let row; columns: columns"></tr>
+    <tr mat-row *matRowDef="let row; columns: columns" [ngClass]="getRowClass(row)"></tr>
   </table>
   <div class="paginador"><mat-paginator [pageSizeOptions]="[1,5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator></div>
 </ng-template>

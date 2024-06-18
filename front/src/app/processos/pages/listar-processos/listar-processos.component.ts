@@ -7,12 +7,12 @@ import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { ProcessosHttpService } from '../../services/processos-http.service';
 import Swal from 'sweetalert2';
-import { NgIf } from '@angular/common';
+import { CommonModule, NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-listar-processos',
   standalone: true,
-  imports: [MaterialModule, RouterModule, MatTableModule, MatSortModule, MatPaginatorModule,NgIf],
+  imports: [MaterialModule, RouterModule, MatTableModule, MatSortModule, MatPaginatorModule,NgIf,CommonModule],
   templateUrl: './listar-processos.component.html',
   styleUrl: './listar-processos.component.css'
 })
@@ -21,7 +21,7 @@ export class ListarProcessosComponent implements OnInit, AfterViewInit {
   processos: IProcessosSexec[] = []
   noProcessosMessage: string = '';
 
-  columns: string[] = ['idProcesso', 'SEI', 'requerente', 'setor_requerente', 'data_entrada_regula', 'data_entrada_sexec', 'unidade_destino', 'objeto', 'tipo_solicitacao',
+  columns: string[] = ['SEI', 'requerente', 'setor_requerente', 'data_entrada_regula', 'data_entrada_sexec', 'unidade_destino', 'objeto', 'tipo_solicitacao',
     'descricao_solicitacao', 'ponto_sei_enviado_interno', 'data_envio_interno', 'prazo_resposta', 'tm_encaminhamento', 'dias_vencer', 'situacao', 'data_retorno', 'tm_resposta', 'status',
     'informacoes_tecnicas', 'ponto_sei_enviado_externo', 'data_envio_externo', 'data_preenchimento', 'observacao', 'actions']
 
@@ -39,7 +39,6 @@ export class ListarProcessosComponent implements OnInit, AfterViewInit {
     this.recoveryProcessos()
 
   }
-
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
@@ -52,7 +51,11 @@ export class ListarProcessosComponent implements OnInit, AfterViewInit {
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
+    if (this.dataSource.filteredData.length === 0) {
+      Swal.fire('Erro!', 'Nenhum processo encontrado', 'error');
+    }
   }
+
 
   recoveryProcessos(): void {
     this.processHttpService.getProcessos().subscribe(
@@ -99,6 +102,21 @@ export class ListarProcessosComponent implements OnInit, AfterViewInit {
       }
     });
   }
+// Função para formatar a data
+formatDate(dateString: string): string {
+  const date = new Date(dateString);
+  return date.toLocaleDateString('pt-BR');
+}
+getRowClass(process: IProcessosSexec): string {
+  if (process.situacao === 'vencido') {
+    return 'row-vencido';
+  } else if (process.situacao === 'proximo_vencimento') {
+    return 'row-proximo-vencimento';
+  } else if (process.situacao === 'respondido') {
+    return 'row-respondido';
+  }
+  return '';
+}
 
 
 }

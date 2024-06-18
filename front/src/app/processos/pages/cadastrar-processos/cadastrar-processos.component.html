@@ -86,14 +86,8 @@
         <mat-error *ngIf="mainForm.get('dias_vencer')?.hasError('required')">Dias a Vencer é obrigatório</mat-error>
       </mat-form-field>
       <mat-form-field appearance="outline">
-        <mat-label>Situação</mat-label>
-        <mat-select disabled="">
-          <mat-option value="one">Vencido</mat-option>
-          <mat-option value="two">No Prazo</mat-option>
-          <mat-option value="three">Respondido</mat-option>
-          <mat-option value="four">Próximo ao Prazo</mat-option>
-        </mat-select>
-        <mat-error *ngIf="mainForm.get('situacao')?.hasError('required')">Situação é obrigatória</mat-error>
+        <mat-label>Status</mat-label>
+        <input matInput formControlName="status" >
       </mat-form-field>
       <mat-form-field appearance="outline">
         <mat-label>Data de Retorno</mat-label>

@@ -90,7 +90,7 @@
       </mat-form-field>
       <mat-form-field appearance="outline">
         <mat-label>Situação</mat-label>
-        <input matInput formControlName="situacao" required>
+        <input matInput formControlName="situacao" >
         <mat-error *ngIf="processosForm.get('situacao')?.hasError('required')">Situação é obrigatória</mat-error>
       </mat-form-field>
       <mat-form-field appearance="outline">
@@ -107,7 +107,11 @@
       </mat-form-field>
       <mat-form-field appearance="outline">
         <mat-label>Status</mat-label>
-        <input matInput formControlName="status" required>
+        <mat-select formControlName="status">
+          <mat-option value="Em análise de viabilidade técnica">Em análise de viabilidade técnica</mat-option>
+          <mat-option value="Providência e Custódias">Providência e Custódias</mat-option>
+          <mat-option value="Respondido">Respondido</mat-option>
+        </mat-select>
         <mat-error *ngIf="processosForm.get('status')?.hasError('required')">Status é obrigatório</mat-error>
       </mat-form-field>
       <mat-form-field appearance="outline">

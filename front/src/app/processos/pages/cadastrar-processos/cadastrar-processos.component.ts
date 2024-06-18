@@ -54,10 +54,10 @@ export class CadastrarProcessosComponent implements OnInit {
       prazo_resposta: [{ value: '', disabled: true }],
       tm_encaminhamento: [{ value: 0, disabled: true }],
       dias_vencer: [{ value: '', disabled: true }, Validators.required],
-      situacao: [{ value: 'Aguardando retorno', disabled: true },],
+      situacao: [{ value: 'No prazo', disabled: true },],
       data_retorno: [{ value: '', disabled: true }],
       tm_resposta: [{ value: 0, disabled: true }],
-      status: [{ value: 'Lançado', disabled: true }, Validators.required],
+      status: [{ value: 'Em análise', disabled: true }, Validators.required],
       informacoes_tecnicas: [{ value: 'Aguardando Retorno', disabled: true }, Validators.required],
       ponto_sei_enviado_externo: [{ value: '', disabled: true }, Validators.required],
       data_envio_externo: [{ value: '', disabled: true }, Validators.required],
@@ -76,15 +76,39 @@ export class CadastrarProcessosComponent implements OnInit {
     // Transformar as datas para o formato 'yyyy-MM-dd'
     formValues.data_entrada_regula = this.transformDate(formValues.data_entrada_regula);
     formValues.data_entrada_sexec = this.transformDate(formValues.data_entrada_sexec);
-    formValues.data_envio_interno = this.transformDate(formValues.data_envio_interno);
-    formValues.data_retorno = this.transformDate(formValues.data_retorno);
+    //formValues.data_envio_interno = this.transformDate(formValues.data_envio_interno);
+    //formValues.data_retorno = this.transformDate(formValues.data_retorno);
     formValues.data_envio_externo = this.transformDate(formValues.data_envio_externo);
-    formValues.prazo_resposta = this.transformDate(formValues.prazo_resposta);
-    formValues.SEI = formValues.SEI.replace(/[\\s./]/g, '');
+    //formValues.prazo_resposta = this.transformDate(formValues.prazo_resposta);
+    formValues.SEI = formValues.SEI.replace(/[\\s./-]/g, '');
     formValues.requerente = formValues.requerente.toLowerCase();
 
-    const process: IProcessosSexec = formValues as IProcessosSexec;
+    // Obter os valores calculados
+    const prazo_resposta = this.mainForm.get('prazo_resposta')?.value;
+    const tm_encaminhamento = this.mainForm.get('tm_encaminhamento')?.value;
+    const dias_vencer = this.mainForm.get('dias_vencer')?.value;
+    const situacao = this.mainForm.get('situacao')?.value
+    const tempoResposta = this.mainForm.get('tm_resposta')?.value
+    const status = this.mainForm.get('status')?.value
+    const informacoesTecnicas = this.mainForm.get('informacoes_tecnicas')?.value
+    const dataEnvioInterno =  this.mainForm.get('data_envio_interno')?.value
+    const dataPreenchimento =  this.mainForm.get('data_preenchimento')?.value
+    const observação = this.mainForm.get('observacao')?.value
 
+    // Garantir que os valores calculados sejam incluídos no objeto process
+    const process: IProcessosSexec = {
+      ...formValues,
+      prazo_resposta: this.transformDate(prazo_resposta),
+      tm_encaminhamento,
+      dias_vencer,
+      situacao,
+      tempoResposta,
+      status,
+      informacoesTecnicas,
+      data_envio_interno: this.transformDate(dataEnvioInterno),
+      data_preenchimento: this.transformDate(dataPreenchimento) ,
+      observação
+    };
     const dataRecord: DataRecord = {
       prazoResposta: process.prazo_resposta,
       status: process.status,
@@ -153,21 +177,32 @@ export class CadastrarProcessosComponent implements OnInit {
     })
   }
   calcularPrazo(dataRecord: DataRecord) {
-    const { prazoResposta, status, dataHoje } = dataRecord
+    const { prazoResposta, status, dataHoje } = dataRecord;
 
     if (!prazoResposta) {
-      return ""
+      return "";
     }
+
+    const prazoRespostaDate = new Date(prazoResposta);
+
+    if (isNaN(prazoRespostaDate.getTime())) {
+      console.error('Invalid date for prazoResposta:', prazoResposta);
+      return "";
+    }
+
     if (status === "Respondido") {
-      return 0
+      return 0;
     }
-    const diferencaPrazo = prazoResposta.getTime() - dataHoje.getTime();
+
+    const diferencaPrazo = prazoRespostaDate.getTime() - dataHoje.getTime();
+
     if (diferencaPrazo < 0) {
       return Math.abs(diferencaPrazo / (1000 * 60 * 60 * 24));
     } else {
       return diferencaPrazo / (1000 * 60 * 60 * 24);
     }
   }
+
   calcularTE() {
     const dataEntradaSexec = this.mainForm.get('data_entrada_sexec')!.value;
     const dataEnvioInterno = this.mainForm.get('data_envio_interno')!.value;

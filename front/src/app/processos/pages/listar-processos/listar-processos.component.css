@@ -32,9 +32,21 @@
   font-size: small;
 }
 .mat-mdc-form-field {
-  font-size: 0.5px;
+  font-size: 20px;
   width: 100%;
 }
 .paginador{
   width: 100%;
 }
+.row-vencido {
+  background-color: red;
+}
+
+.row-proximo-vencimento {
+  background-color: yellow;
+}
+
+.row-respondido {
+  background-color: green;
+}
+
