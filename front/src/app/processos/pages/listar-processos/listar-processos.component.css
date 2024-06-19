@@ -10,7 +10,7 @@
   white-space: nowrap;
   table-layout: fixed;
   font-size: small;
-  height: 80vh;
+  /*height: 80vh;*/
   font-size: x-small;
   width: 100%;
 
@@ -50,3 +50,12 @@
   background-color: green;
 }
 
+.mat-column-SEI {
+  height: 20px;
+  text-align: center;
+}
+
+.mat-column-requerente {
+  height: 20px;
+  text-align: center;
+}
