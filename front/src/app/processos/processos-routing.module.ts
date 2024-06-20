@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { CadastrarProcessosComponent } from './pages/cadastrar-processos/cadastrar-processos.component';
 import { EditarProcessosComponent } from './pages/editar-processos/editar-processos.component';
 import { ListarProcessosComponent } from './pages/listar-processos/listar-processos.component';
+import { NavibarComponent } from './pages/navibar/navibar.component';
 
 const routes: Routes = [
   {
@@ -16,8 +17,17 @@ const routes: Routes = [
   {
     path: '',
     pathMatch: 'full',
-    component: ListarProcessosComponent
+    redirectTo:'/home'
   },
+
+  {
+    path:'login',
+    component:NavibarComponent
+  },
+  {
+    path:'processos',
+    component: ListarProcessosComponent
+  }
 
 ];
 

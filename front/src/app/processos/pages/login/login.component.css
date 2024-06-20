@@ -1,0 +1,26 @@
+#main-form {
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+  margin-top: 10px;
+
+}
+.mat-mdc-card-content {
+  align-self: center;
+}
+.mat-mdc-card-header
+{
+  align-self: center;
+  margin-top: 50px;
+
+
+}
+.mat-mdc-card{
+  border: 50px;
+  width: 500px;
+  margin-left: 680px;
+  margin-top: 250px;
+  height: 400px;
+  
+}
+

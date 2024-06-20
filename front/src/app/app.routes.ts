@@ -4,7 +4,7 @@ import { NgModule } from '@angular/core'
 
  export const routes: Routes = [
   {
-    path: 'processos',
+    path: 'home',
     loadChildren: async () => { // Lazy Loading
       const m = await import('./processos/processos.module');
       return m.ProcessosModule;

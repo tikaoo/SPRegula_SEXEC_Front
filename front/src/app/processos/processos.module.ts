@@ -19,7 +19,8 @@ import {HttpClientModule, provideHttpClient, withFetch } from '@angular/common/h
     HttpClientModule
   ],
   providers: [
-    provideHttpClient(withFetch())
+    provideHttpClient(withFetch()),
+    
   ],
 })
 export class ProcessosModule { }
