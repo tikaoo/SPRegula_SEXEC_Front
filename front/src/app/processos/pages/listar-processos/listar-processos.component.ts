@@ -9,6 +9,7 @@ import { ProcessosHttpService } from '../../services/processos-http.service';
 import Swal from 'sweetalert2';
 import { CommonModule, NgIf } from '@angular/common';
 
+
 @Component({
   selector: 'app-listar-processos',
   standalone: true,
@@ -16,8 +17,8 @@ import { CommonModule, NgIf } from '@angular/common';
   templateUrl: './listar-processos.component.html',
   styleUrl: './listar-processos.component.css'
 })
-export class ListarProcessosComponent implements OnInit, AfterViewInit {
-
+export class ListarProcessosComponent implements OnInit, AfterViewInit{
+  
   processos: IProcessosSexec[] = []
   noProcessosMessage: string = '';
 
@@ -55,8 +56,6 @@ export class ListarProcessosComponent implements OnInit, AfterViewInit {
       Swal.fire('Erro!', 'Nenhum processo encontrado', 'error');
     }
   }
-
-
   recoveryProcessos(): void {
     this.processHttpService.getProcessos().subscribe(
       (processSexec) => {

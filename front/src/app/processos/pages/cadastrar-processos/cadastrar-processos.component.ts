@@ -3,11 +3,14 @@ import { Component, OnInit } from '@angular/core';
 import { MaterialModule } from '../../../Material/material.module';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, UrlTree } from '@angular/router';
 import { ProcessosHttpService } from '../../services/processos-http.service';
 import Swal from 'sweetalert2';
 import { IProcessosSexec, DataRecord } from '../../../Model/processos';
 import { MAT_DATE_FORMATS } from '@angular/material/core';
+import { ICanDeActivate } from '../../../Model/candeActivate';
+
+
 
 export const MY_DATE_FORMATS = {
   parse: {
@@ -27,7 +30,7 @@ export const MY_DATE_FORMATS = {
     { provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS }, DatePipe
   ]
 })
-export class CadastrarProcessosComponent implements OnInit {
+export class CadastrarProcessosComponent implements OnInit,ICanDeActivate {
   mainForm: FormGroup;
   private dirty: boolean = false;
   isPrazoRespostaReadonly: boolean = true;
@@ -239,4 +242,29 @@ export class CadastrarProcessosComponent implements OnInit {
       }
     }
   }
+  mudarRota() {
+    if (this.dirty) {
+      return new Promise<boolean>((resolve) => {
+        Swal.fire({
+          title: 'Tem certeza que deseja sair dessa página?',
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonText: 'Sim',
+          cancelButtonText: 'Não',
+        }).then((result) => {
+          if (result.isConfirmed) {
+            resolve(true);
+          } else {
+            resolve(false);
+          }
+        });
+      });
+    } else {
+      return Promise.resolve(true);
+    }
+  }
+  desativarGuard() {
+    return this.mudarRota();
+  }
+
 }

@@ -4,7 +4,9 @@ import { ProcessosRoutingModule } from './processos-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
-import {HttpClientModule, provideHttpClient, withFetch } from '@angular/common/http';
+import { HttpClientModule, provideHttpClient, withFetch } from '@angular/common/http';
+
+
 
 
 @NgModule({
@@ -19,8 +21,8 @@ import {HttpClientModule, provideHttpClient, withFetch } from '@angular/common/h
     HttpClientModule
   ],
   providers: [
-    provideHttpClient(withFetch()),
-    
+    provideHttpClient(withFetch())
+
   ],
 })
 export class ProcessosModule { }

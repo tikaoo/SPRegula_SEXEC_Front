@@ -9,6 +9,7 @@ import { IProcessosSexec } from '../../../Model/processos';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProcessosHttpService } from '../../services/processos-http.service';
 import Swal from 'sweetalert2';
+import { ICanDeActivate } from '../../../Model/candeActivate';
 
 
 @Component({
@@ -21,8 +22,8 @@ import Swal from 'sweetalert2';
     { provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS },DatePipe
   ]
 })
-export class EditarProcessosComponent implements OnInit {
-
+export class EditarProcessosComponent implements OnInit,ICanDeActivate {
+  private dirty: boolean = false;
   process!: IProcessosSexec
   processosForm: FormGroup
 
@@ -154,6 +155,7 @@ export class EditarProcessosComponent implements OnInit {
           );
           this.processosForm.reset();
           this.router.navigateByUrl('/processos');
+          this.dirty = false;
         },
         () => {
           Swal.fire(
@@ -166,6 +168,9 @@ export class EditarProcessosComponent implements OnInit {
   }
   voltarAosProcessos(): void {
     this.router.navigate(['/processos']);
+  }
+  dirtyInput() {
+    this.dirty = true;
   }
 
   atualizarSituacao() {
@@ -221,7 +226,30 @@ export class EditarProcessosComponent implements OnInit {
       }
     }
   }
-
+  mudarRota() {
+    if (this.dirty) {
+      return new Promise<boolean>((resolve) => {
+        Swal.fire({
+          title: 'Tem certeza que deseja sair dessa página?',
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonText: 'Sim',
+          cancelButtonText: 'Não',
+        }).then((result) => {
+          if (result.isConfirmed) {
+            resolve(true);
+          } else {
+            resolve(false);
+          }
+        });
+      });
+    } else {
+      return Promise.resolve(true);
+    }
+  }
+  desativarGuard() {
+    return this.mudarRota();
+  }
 
 
 }
