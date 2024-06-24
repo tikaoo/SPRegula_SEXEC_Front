@@ -1,22 +1,24 @@
-<div class="flex-container">
-  <mat-card>
-    <mat-card-header>
-      <mat-card-title>Login</mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-      <form action="" id="main-form" [formGroup]="usuario" (ngSubmit)="submit()">
-        <mat-form-field appearance="outline">
-          <mat-label>e-mail</mat-label>
-          <input type="email" matInput formControlName="email">
-        </mat-form-field>
-        <mat-form-field appearance="outline">
-          <mat-label>Senha</mat-label>
-          <input type="password" matInput formControlName="senha">
-        </mat-form-field>
-        <button mat-raised-button type="submit" color="accent" [disabled]="usuario.invalid">
-          <mat-icon>login</mat-icon>
-        </button>
-      </form>
-    </mat-card-content>
-  </mat-card>
+<div class="parent">
+  <div class="container">
+      <div class="login-box">
+          <h2>Login</h2>
+          <form action="" id="main-form" [formGroup]="usuario" (ngSubmit)="submit()">
+              <div class="input-box">
+                  <input type="email" matInput formControlName="email">
+                  <label>Email</label>
+              </div>
+              <div class="input-box">
+                  <input type="password" matInput formControlName="senha">
+                  <label>Password</label>
+              </div>
+
+              <button type="button" class="btn" (click)="submit()" >Login</button>
+
+          </form>
+      </div>
+
+  </div>
 </div>
+
+
+

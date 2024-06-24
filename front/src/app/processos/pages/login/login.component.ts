@@ -13,6 +13,7 @@ import { AuthenticationServiceService } from '../../services/authentication-serv
 })
 export class LoginComponent implements OnInit {
 
+  isSignDivVisiable: boolean  = true;
   usuario: FormGroup = this.fb.group({
     email: ['', [ Validators.required ]],
     senha: ['', [ Validators.required, Validators.minLength(4) ]]
