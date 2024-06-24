@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { ActivatedRouteSnapshot, RouterModule, RouterStateSnapshot, Routes } from '@angular/router';
 import { CadastrarProcessosComponent } from './pages/cadastrar-processos/cadastrar-processos.component';
 import { EditarProcessosComponent } from './pages/editar-processos/editar-processos.component';
 import { ListarProcessosComponent } from './pages/listar-processos/listar-processos.component';
@@ -10,14 +10,14 @@ const routes: Routes = [
   {
     path: 'spregula/cadastrar-processos',
     component: CadastrarProcessosComponent,
-    canActivate:[
+    canDeactivate:[
       confirmExitGuard
     ]
   },
   {
     path: 'spregula/edit/:SEI',
     component: EditarProcessosComponent,
-    canActivate:[
+    canDeactivate:[
       confirmExitGuard
     ]
   },
@@ -40,6 +40,11 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
+  providers:[{
+    provide:'confirmExitGuard',
+    useValue: (route: ActivatedRouteSnapshot, state: RouterStateSnapshot) => true
+
+  }]
 })
 export class ProcessosRoutingModule { }

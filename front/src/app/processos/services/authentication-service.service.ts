@@ -18,14 +18,12 @@ export class AuthenticationServiceService {
     return this.http.post<{Authorization: string}>(`${this.baseUrl}/login`, usuario)
       .pipe(
         tap((response) => {
-          console.log('Login response:', response); // Log da resposta do login
           const token = response.Authorization;
           if (token) {
             localStorage.setItem('token', token);
-            console.log('Token saved in localStorage:', token); // Log do token salvo
             this.logged$.next(true);
           } else {
-            console.error('Token is undefined');
+
           }
         })
       );

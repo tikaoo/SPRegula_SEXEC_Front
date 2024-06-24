@@ -4,8 +4,9 @@ import { MaterialModule } from './Material/material.module';
 import { AppRoutingModule } from './app.routes';
 import { BrowserModule } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
-import { HTTP_INTERCEPTORS, provideHttpClient, withFetch } from '@angular/common/http';
-import { authTokenInterceptor } from './auth/interceptors/auth-token.interceptor';
+import { provideHttpClient, withFetch } from '@angular/common/http';
+
+
 
 
 @NgModule({
@@ -22,7 +23,6 @@ import { authTokenInterceptor } from './auth/interceptors/auth-token.interceptor
   ],
 
   providers: [provideHttpClient(withFetch()),
-    
   ]
 
 })

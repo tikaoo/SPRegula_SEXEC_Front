@@ -11,7 +11,7 @@ export const confirmExitGuard: CanDeactivateFn<CD> = (
   component:CD  ,
   currentRoute: ActivatedRouteSnapshot ,
    currentState:RouterStateSnapshot ,
-   nextState?:RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree =>{
+   ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree =>{
   return  component.desativarGuard ? component.desativarGuard() : true;
 };
 

@@ -12,6 +12,7 @@ import Swal from 'sweetalert2';
 import { ICanDeActivate } from '../../../Model/candeActivate';
 
 
+
 @Component({
   selector: 'app-editar-processos',
   standalone: true,
@@ -115,7 +116,7 @@ export class EditarProcessosComponent implements OnInit,ICanDeActivate {
     formValues.data_envio_externo = this.datePipe.transform(formValues.data_envio_externo, 'yyyy-MM-dd');
     formValues.data_preenchimento = this.datePipe.transform(formValues.data_preenchimento, 'yyyy-MM-dd');
 
-    console.log('Form Values:', formValues); // Log para verificação
+
 
     // Criar um objeto para os campos que precisam ser atualizados no banco de dados
     const numeroSei: IProcessosSexec = {
@@ -154,8 +155,8 @@ export class EditarProcessosComponent implements OnInit,ICanDeActivate {
             'success'
           );
           this.processosForm.reset();
-          this.router.navigateByUrl('/processos');
-          this.dirty = false;
+          this.router.navigateByUrl('home/processos');
+          this.desativarGuard()
         },
         () => {
           Swal.fire(
@@ -167,12 +168,8 @@ export class EditarProcessosComponent implements OnInit,ICanDeActivate {
       );
   }
   voltarAosProcessos(): void {
-    this.router.navigate(['/processos']);
+    this.router.navigate(['home/processos']);
   }
-  dirtyInput() {
-    this.dirty = true;
-  }
-
   atualizarSituacao() {
     const diasVencer = this.processosForm.get('dias_vencer')!.value
     if (diasVencer > 15) {
@@ -227,7 +224,7 @@ export class EditarProcessosComponent implements OnInit,ICanDeActivate {
     }
   }
   mudarRota() {
-    if (this.dirty) {
+    if (this.processosForm.dirty) {
       return new Promise<boolean>((resolve) => {
         Swal.fire({
           title: 'Tem certeza que deseja sair dessa página?',
@@ -250,6 +247,7 @@ export class EditarProcessosComponent implements OnInit,ICanDeActivate {
   desativarGuard() {
     return this.mudarRota();
   }
+
 
 
 }

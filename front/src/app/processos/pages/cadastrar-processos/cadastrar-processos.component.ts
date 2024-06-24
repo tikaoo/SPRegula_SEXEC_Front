@@ -10,8 +10,6 @@ import { IProcessosSexec, DataRecord } from '../../../Model/processos';
 import { MAT_DATE_FORMATS } from '@angular/material/core';
 import { ICanDeActivate } from '../../../Model/candeActivate';
 
-
-
 export const MY_DATE_FORMATS = {
   parse: {
     dateInput: 'YYYY/MM/DD',
@@ -30,9 +28,9 @@ export const MY_DATE_FORMATS = {
     { provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS }, DatePipe
   ]
 })
-export class CadastrarProcessosComponent implements OnInit,ICanDeActivate {
+export class CadastrarProcessosComponent implements OnInit, ICanDeActivate {
   mainForm: FormGroup;
-  private dirty: boolean = false;
+
   isPrazoRespostaReadonly: boolean = true;
   resultado: string | number | null = null;
 
@@ -76,13 +74,9 @@ export class CadastrarProcessosComponent implements OnInit,ICanDeActivate {
   }
   cadastrarProcess() {
     const formValues = this.mainForm.value;
-    // Transformar as datas para o formato 'yyyy-MM-dd'
     formValues.data_entrada_regula = this.transformDate(formValues.data_entrada_regula);
     formValues.data_entrada_sexec = this.transformDate(formValues.data_entrada_sexec);
-    //formValues.data_envio_interno = this.transformDate(formValues.data_envio_interno);
-    //formValues.data_retorno = this.transformDate(formValues.data_retorno);
     formValues.data_envio_externo = this.transformDate(formValues.data_envio_externo);
-    //formValues.prazo_resposta = this.transformDate(formValues.prazo_resposta);
     formValues.SEI = formValues.SEI.replace(/[\\s./-]/g, '');
     formValues.requerente = formValues.requerente.toLowerCase();
 
@@ -94,8 +88,8 @@ export class CadastrarProcessosComponent implements OnInit,ICanDeActivate {
     const tempoResposta = this.mainForm.get('tm_resposta')?.value
     const status = this.mainForm.get('status')?.value
     const informacoesTecnicas = this.mainForm.get('informacoes_tecnicas')?.value
-    const dataEnvioInterno =  this.mainForm.get('data_envio_interno')?.value
-    const dataPreenchimento =  this.mainForm.get('data_preenchimento')?.value
+    const dataEnvioInterno = this.mainForm.get('data_envio_interno')?.value
+    const dataPreenchimento = this.mainForm.get('data_preenchimento')?.value
     const observação = this.mainForm.get('observacao')?.value
 
     // Garantir que os valores calculados sejam incluídos no objeto process
@@ -109,7 +103,7 @@ export class CadastrarProcessosComponent implements OnInit,ICanDeActivate {
       status,
       informacoesTecnicas,
       data_envio_interno: this.transformDate(dataEnvioInterno),
-      data_preenchimento: this.transformDate(dataPreenchimento) ,
+      data_preenchimento: this.transformDate(dataPreenchimento),
       observação
     };
     const dataRecord: DataRecord = {
@@ -122,8 +116,8 @@ export class CadastrarProcessosComponent implements OnInit,ICanDeActivate {
 
     this.http.addProcesso(process).subscribe(() => {
       Swal.fire('Sucesso!', 'Processo cadastrado com sucesso', 'success');
-      this.router.navigateByUrl('/processos');
-      this.dirty = false;
+      this.router.navigateByUrl('home/processos');
+      this.desativarGuard()
     },
       (e) => {
         if (e.status === 500) {
@@ -135,11 +129,8 @@ export class CadastrarProcessosComponent implements OnInit,ICanDeActivate {
         }
       });
   }
-  dirtyInput() {
-    this.dirty = true;
-  }
   voltarAosProcessos(): void {
-    this.router.navigate(['/processos']);
+    this.router.navigate(['home/processos']);
   }
   onRequerenteChange(value: string) {
     this.isPrazoRespostaReadonly = value.toLowerCase() !== 'tcm';
@@ -243,10 +234,10 @@ export class CadastrarProcessosComponent implements OnInit,ICanDeActivate {
     }
   }
   mudarRota() {
-    if (this.dirty) {
+    if (this.mainForm.dirty) {
       return new Promise<boolean>((resolve) => {
         Swal.fire({
-          title: 'Tem certeza que deseja sair dessa página?',
+          title: 'Tem certeza que deseja sair dessa página? Há dados não salvos!',
           icon: 'warning',
           showCancelButton: true,
           confirmButtonText: 'Sim',
