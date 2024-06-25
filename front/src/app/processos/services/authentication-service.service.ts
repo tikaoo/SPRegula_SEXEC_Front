@@ -31,4 +31,9 @@ export class AuthenticationServiceService {
   logged():Observable<boolean>{
     return this.logged$.asObservable()
   }
+  logout(): void {
+    localStorage.removeItem('token');
+    this.logged$.next(false);
+  }
+
 }

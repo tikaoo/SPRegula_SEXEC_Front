@@ -1,4 +1,5 @@
 <div class="flex-container column">
+  <button mat-mini-fab color="primary"  aria-label="Voltar aos processos" (click)='logout()'>Logout</button>
   <mat-form-field>
     <mat-label>Pesquisa</mat-label>
     <input matInput ((keypress))="applyFilter($event)"  #input>

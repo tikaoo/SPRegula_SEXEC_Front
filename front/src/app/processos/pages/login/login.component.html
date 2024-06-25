@@ -1,24 +1,23 @@
-<div class="parent">
-  <div class="container">
-      <div class="login-box">
-          <h2>Login</h2>
-          <form action="" id="main-form" [formGroup]="usuario" (ngSubmit)="submit()">
-              <div class="input-box">
-                  <input type="email" matInput formControlName="email">
-                  <label>Email</label>
-              </div>
-              <div class="input-box">
-                  <input type="password" matInput formControlName="senha">
-                  <label>Password</label>
-              </div>
-
-              <button type="button" class="btn" (click)="submit()" >Login</button>
-
-          </form>
-      </div>
-
-  </div>
+<div class="flex-container">
+  <mat-card>
+    <h1>Login</h1>
+    <form [formGroup]="usuario" (ngSubmit)="submit()">
+      <mat-form-field appearance="outline">
+        <mat-label>E-mail</mat-label>
+        <input matInput formControlName="email" required>
+        <mat-error *ngIf="usuario.get('email')?.hasError('required')">E-mail é obrigatório</mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Senha</mat-label>
+        <input matInput formControlName="senha" required>
+        <mat-error *ngIf="usuario.get('senha')?.hasError('required')">Senha é obrigatório</mat-error>
+      </mat-form-field>
+      <button mat-raised-button color="primary" type="submit">Enviar</button>
+    </form>
+  </mat-card>
+  <footer><img src="/front/public/PREFEITURA_2.png" alt="SPRegula"></footer>
 </div>
+
 
 
 

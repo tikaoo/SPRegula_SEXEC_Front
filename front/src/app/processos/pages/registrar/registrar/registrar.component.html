@@ -1,0 +1,40 @@
+<div class="flex-container">
+  <button mat-mini-fab color="primary"  aria-label="Voltar aos processos" (click)="voltarAosProcessos()">
+    <mat-icon>
+      arrow_left
+    </mat-icon>
+  </button>
+  <mat-card>
+    <h1>Cadastrar Usuário</h1>
+    <form [formGroup]="userForm" (ngSubmit)="register()">
+      <mat-form-field appearance="outline">
+        <mat-label>Nome</mat-label>
+        <input matInput formControlName="nome" required>
+        <mat-error *ngIf="userForm.get('nome')?.hasError('required')">Nome é obrigatório</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>E-mail</mat-label>
+        <input matInput formControlName="email" required>
+        <mat-error *ngIf="userForm.get('email')?.hasError('required')">E-mail é obrigatório</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Senha</mat-label>
+        <input matInput formControlName="senha" required>
+        <mat-error *ngIf="userForm.get('senha')?.hasError('required')">Senha é obrigatório</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Confirme sua senha</mat-label>
+        <input matInput formControlName="confirmSenha" required>
+        <mat-error *ngIf="userForm.get('confirmSenha')?.hasError('required')">Confirme sua senha</mat-error>
+      </mat-form-field>
+      <button mat-raised-button color="primary" type="submit">Enviar</button>
+    </form>
+  </mat-card>
+  <footer><img src="/front/public/PREFEITURA_2.png" alt="SPRegula"></footer>
+</div>
+
+
+

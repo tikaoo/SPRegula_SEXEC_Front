@@ -3,17 +3,19 @@ import { MaterialModule } from '../../../Material/material.module';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthenticationServiceService } from '../../services/authentication-service.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [MaterialModule,ReactiveFormsModule],
+  imports: [MaterialModule,ReactiveFormsModule,CommonModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
 export class LoginComponent implements OnInit {
 
   isSignDivVisiable: boolean  = true;
+
   usuario: FormGroup = this.fb.group({
     email: ['', [ Validators.required ]],
     senha: ['', [ Validators.required, Validators.minLength(4) ]]
@@ -39,5 +41,8 @@ export class LoginComponent implements OnInit {
     } else {
       console.log('Form is invalid');
     }
+  }
+  voltarAosProcessos(): void {
+    this.router.navigate(['home/registrar']);
   }
 }

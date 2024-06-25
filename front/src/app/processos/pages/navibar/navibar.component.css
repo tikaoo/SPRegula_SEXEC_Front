@@ -1,6 +1,7 @@
 header {
   padding: 10px;
   background: #0d0e0e;
+  height: 7vh;
 }
 .logo {
   width: 90px;
@@ -9,7 +10,7 @@ header {
   cursor: pointer;
 }
 .desktop_menu {
-  margin-top: 24px;
+  margin-top: 1px;
 }
 .desktop_menu ul {
   padding: 0;
@@ -23,7 +24,6 @@ header {
   margin-left: 26px;
 }
 .desktop_menu ul li:hover {
-  font-size: 19px;
   font-weight: bold;
   cursor: pointer;
   color: yellow;
@@ -32,10 +32,19 @@ header {
 .menu-icon {
   display: none;
 }
-
-
-
-
+button{
+  align-self: flex-start;
+  margin-bottom: 20px;
+  width: 90px;
+  height: 40px;
+  background-color: #eeff00;
+  border: none;
+  color: #111111;
+  font-size: 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
 
 @media screen and (min-width: 128px) and (max-width: 900px) {
   .desktop_menu {

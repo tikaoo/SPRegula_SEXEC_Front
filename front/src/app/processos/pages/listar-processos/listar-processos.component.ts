@@ -8,6 +8,7 @@ import { MatSort, MatSortModule } from '@angular/material/sort';
 import { ProcessosHttpService } from '../../services/processos-http.service';
 import Swal from 'sweetalert2';
 import { CommonModule, NgIf } from '@angular/common';
+import { AuthenticationServiceService } from '../../services/authentication-service.service';
 
 
 @Component({
@@ -18,7 +19,7 @@ import { CommonModule, NgIf } from '@angular/common';
   styleUrl: './listar-processos.component.css'
 })
 export class ListarProcessosComponent implements OnInit, AfterViewInit{
-  
+
   processos: IProcessosSexec[] = []
   noProcessosMessage: string = '';
 
@@ -33,7 +34,8 @@ export class ListarProcessosComponent implements OnInit, AfterViewInit{
   @ViewChild(MatSort) sort!: MatSort;
 
   constructor(private processHttpService: ProcessosHttpService,
-    private router: Router
+    private router: Router,
+    private authService: AuthenticationServiceService
   ) { }
 
   ngOnInit(): void {
@@ -116,7 +118,10 @@ getRowClass(process: IProcessosSexec): string {
   }
   return '';
 }
-
+logout(): void {
+  this.authService.logout();
+  this.router.navigate(['/home/login']); // Substitua '/login' pela rota da página de login
+}
 
 }
 

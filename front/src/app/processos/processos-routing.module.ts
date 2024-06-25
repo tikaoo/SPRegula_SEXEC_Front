@@ -5,6 +5,7 @@ import { EditarProcessosComponent } from './pages/editar-processos/editar-proces
 import { ListarProcessosComponent } from './pages/listar-processos/listar-processos.component';
 import { NavibarComponent } from './pages/navibar/navibar.component';
 import { confirmExitGuard } from '../guard/confirm-exit.guard';
+import { RegistrarComponent } from './pages/registrar/registrar/registrar.component';
 
 const routes: Routes = [
   {
@@ -24,7 +25,7 @@ const routes: Routes = [
   {
     path: '',
     pathMatch: 'full',
-    redirectTo:'/home'
+    redirectTo:'/home/login'
   },
 
   {
@@ -34,6 +35,10 @@ const routes: Routes = [
   {
     path:'processos',
     component: ListarProcessosComponent
+  },
+  {
+    path:'registrar',
+    component:RegistrarComponent
   }
 
 ];

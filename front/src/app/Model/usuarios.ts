@@ -3,5 +3,7 @@ export interface IUsuarios {
     nome?:string,
     email:string,
     senha: string,
-    permissao?:string
+    departamento?:string,
+    permissao?: string,
+    confirmSenha? :string
 }

@@ -17,7 +17,7 @@ h1 {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 90.8vh;
+  height: 100vh;
   flex-direction: column;
   width: 100%;
   padding: 20px;
@@ -33,14 +33,14 @@ button[mat-mini-fab] {
   padding: 10px 20px;
   border: none;
   color: #111111;
-  font-size: 18px;
+  font-size: 16px;
   border-radius: 4px;
   cursor: pointer;
   transition: background-color 0.3s;
 }
 
 mat-card {
-  width: 30%;
+  width: 45%;
   padding: 30px;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -60,7 +60,7 @@ form {
 }
 
 mat-form-field {
-  width: 60%;
+  width: 80%;
   margin-bottom: 20px;
 }
 
@@ -86,7 +86,7 @@ button[mat-raised-button] {
   background-color: #eeff00;
   border: none;
   color: #111111;
-  font-size: 18px;
+  font-size: 16px;
   border-radius: 4px;
   cursor: pointer;
   transition: background-color 0.3s;
