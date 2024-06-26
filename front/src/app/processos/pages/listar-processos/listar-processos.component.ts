@@ -14,11 +14,11 @@ import { AuthenticationServiceService } from '../../services/authentication-serv
 @Component({
   selector: 'app-listar-processos',
   standalone: true,
-  imports: [MaterialModule, RouterModule, MatTableModule, MatSortModule, MatPaginatorModule,NgIf,CommonModule],
+  imports: [MaterialModule, RouterModule, MatTableModule, MatSortModule, MatPaginatorModule, NgIf, CommonModule],
   templateUrl: './listar-processos.component.html',
   styleUrl: './listar-processos.component.css'
 })
-export class ListarProcessosComponent implements OnInit, AfterViewInit{
+export class ListarProcessosComponent implements OnInit, AfterViewInit {
 
   processos: IProcessosSexec[] = []
   noProcessosMessage: string = '';
@@ -93,35 +93,35 @@ export class ListarProcessosComponent implements OnInit, AfterViewInit{
             this.router
               .navigateByUrl('/', { skipLocationChange: true })
               .then(() => {
-                this.router.navigate(['/processos']);
+                this.router.navigate(['/home/processos']);
               });
           },
           (e) => {
-            Swal.fire('Erro!', 'Falha ao excluir cliente!', 'error');
+            Swal.fire('Erro!', 'Falha ao excluir processo!', 'error');
           }
         );
       }
     });
   }
-// Função para formatar a data
-formatDate(dateString: string): string {
-  const date = new Date(dateString);
-  return date.toLocaleDateString('pt-BR');
-}
-getRowClass(process: IProcessosSexec): string {
-  if (process.situacao === 'vencido') {
-    return 'row-vencido';
-  } else if (process.situacao === 'proximo_vencimento') {
-    return 'row-proximo-vencimento';
-  } else if (process.situacao === 'respondido') {
-    return 'row-respondido';
+  // Função para formatar a data
+  formatDate(dateString: string): string {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('pt-BR');
   }
-  return '';
-}
-logout(): void {
-  this.authService.logout();
-  this.router.navigate(['/home/login']); // Substitua '/login' pela rota da página de login
-}
+  getRowClass(process: IProcessosSexec): string {
+    if (process.situacao === 'vencido') {
+      return 'row-vencido';
+    } else if (process.situacao === 'proximo_vencimento') {
+      return 'row-proximo-vencimento';
+    } else if (process.situacao === 'respondido') {
+      return 'row-respondido';
+    }
+    return '';
+  }
+  logout(): void {
+    this.authService.logout();
+    this.router.navigate(['/home/login']); // Substitua '/login' pela rota da página de login
+  }
 
 }
 

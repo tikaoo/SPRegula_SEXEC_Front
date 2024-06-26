@@ -12,23 +12,22 @@
   white-space: nowrap;
   table-layout: fixed;
   font-size: small;
-  /*height: 80vh;*/
   font-size: x-small;
   width: 100%;
-
 }
 
 .flex-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 105%;
+  height: 100vh;
+  /* Alterado para caber na altura da tela */
   flex-direction: column;
-  width: 250%;
+  width: 100%;
+  /* Alterado para caber na largura da tela */
   padding: 20px;
   box-sizing: border-box;
   background-color: #3c135e;
-
 }
 
 .mat-mdc-header-cell {
@@ -41,28 +40,13 @@
   width: 100%;
 }
 
-.paginador {
-  width: 100%;
-}
 
-.row-vencido {
-  background-color: red;
-}
-
-.row-proximo-vencimento {
-  background-color: yellow;
-}
-
-.row-respondido {
-  background-color: green;
-}
-
-.mat-column-SEI {
+.mat-column-nome {
   height: 20px;
   text-align: center;
 }
 
-.mat-column-requerente {
+.mat-column-email {
   height: 20px;
   text-align: center;
 }

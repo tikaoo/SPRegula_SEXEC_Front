@@ -1,4 +1,4 @@
-import { CommonModule, DatePipe} from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
@@ -20,10 +20,10 @@ import { ICanDeActivate } from '../../../Model/candeActivate';
   templateUrl: './editar-processos.component.html',
   styleUrl: './editar-processos.component.css',
   providers: [
-    { provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS },DatePipe
+    { provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS }, DatePipe
   ]
 })
-export class EditarProcessosComponent implements OnInit,ICanDeActivate {
+export class EditarProcessosComponent implements OnInit, ICanDeActivate {
   private dirty: boolean = false;
   process!: IProcessosSexec
   processosForm: FormGroup
@@ -37,7 +37,7 @@ export class EditarProcessosComponent implements OnInit,ICanDeActivate {
 
   ) {
     this.processosForm = this.fb.group({
-      SEI: [ { value: '', disabled: true}, Validators.required],
+      SEI: [{ value: '', disabled: true }, Validators.required],
       requerente: [{ value: '', disabled: true }, Validators.required],
       setor_requerente: [{ value: '', disabled: true }, Validators.required],
       data_entrada_regula: [{ value: '', disabled: true }, Validators.required],
@@ -75,7 +75,7 @@ export class EditarProcessosComponent implements OnInit,ICanDeActivate {
       this.http.getProcessoSei(iSEI).subscribe(
         (response) => {
           this.process = response;
-            this.processosForm.patchValue({
+          this.processosForm.patchValue({
             SEI: this.process.SEI,
             requerente: this.process.requerente,
             setor_requerente: this.process.setor_requerente,

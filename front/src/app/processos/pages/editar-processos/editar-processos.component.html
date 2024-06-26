@@ -1,153 +1,294 @@
 <div class="flex-container">
-  <button mat-mini-fab
-  class="add"
-  color="primary"
-  (click)="voltarAosProcessos()">
-    <mat-icon>
-      arrow_left
-    </mat-icon>
+  <button
+    mat-mini-fab
+    class="add"
+    color="primary"
+    (click)="voltarAosProcessos()"
+  >
+    <mat-icon> arrow_left </mat-icon>
   </button>
   <mat-card>
     <h1>Editar Processos</h1>
     <form [formGroup]="processosForm" (ngSubmit)="atualizar()">
       <mat-form-field appearance="outline">
         <mat-label>SEI</mat-label>
-        <input matInput formControlName="SEI" required>
-        <mat-error *ngIf="processosForm.get('SEI')?.hasError('required')">SEI é obrigatório</mat-error>
+        <input matInput formControlName="SEI" required />
+        <mat-error *ngIf="processosForm.get('SEI')?.hasError('required')"
+          >SEI é obrigatório</mat-error
+        >
       </mat-form-field>
       <mat-form-field appearance="outline">
         <mat-label>Requerente</mat-label>
-        <input matInput formControlName="requerente" required>
-        <mat-error *ngIf="processosForm.get('requerente')?.hasError('required')">Requerente é obrigatório</mat-error>
+        <input matInput formControlName="requerente" required />
+        <mat-error *ngIf="processosForm.get('requerente')?.hasError('required')"
+          >Requerente é obrigatório</mat-error
+        >
       </mat-form-field>
       <mat-form-field appearance="outline">
         <mat-label>Setor Requerente</mat-label>
-        <input matInput formControlName="setor_requerente" required>
-        <mat-error *ngIf="processosForm.get('setor_requerente')?.hasError('required')">Setor Requerente é obrigatório</mat-error>
+        <input matInput formControlName="setor_requerente" required />
+        <mat-error
+          *ngIf="processosForm.get('setor_requerente')?.hasError('required')"
+          >Setor Requerente é obrigatório</mat-error
+        >
       </mat-form-field>
       <mat-form-field appearance="outline">
         <mat-label>Data de Entrada Regula</mat-label>
-        <input matInput [matDatepicker]="dataEntradaRegula" formControlName="data_entrada_regula" required>
-        <mat-datepicker-toggle matSuffix [for]="dataEntradaRegula"></mat-datepicker-toggle>
+        <input
+          matInput
+          [matDatepicker]="dataEntradaRegula"
+          formControlName="data_entrada_regula"
+          required
+        />
+        <mat-datepicker-toggle
+          matSuffix
+          [for]="dataEntradaRegula"
+        ></mat-datepicker-toggle>
         <mat-datepicker #dataEntradaRegula></mat-datepicker>
-        <mat-error *ngIf="processosForm.get('data_entrada_regula')?.hasError('required')">Data de Entrada Regula é obrigatória</mat-error>
+        <mat-error
+          *ngIf="processosForm.get('data_entrada_regula')?.hasError('required')"
+          >Data de Entrada Regula é obrigatória</mat-error
+        >
       </mat-form-field>
       <mat-form-field appearance="outline">
         <mat-label>Data de Entrada Sexec</mat-label>
-        <input matInput [matDatepicker]="dataEntradaSexec" formControlName="data_entrada_sexec" required>
-        <mat-datepicker-toggle matSuffix [for]="dataEntradaSexec"></mat-datepicker-toggle>
+        <input
+          matInput
+          [matDatepicker]="dataEntradaSexec"
+          formControlName="data_entrada_sexec"
+          required
+        />
+        <mat-datepicker-toggle
+          matSuffix
+          [for]="dataEntradaSexec"
+        ></mat-datepicker-toggle>
         <mat-datepicker #dataEntradaSexec></mat-datepicker>
-        <mat-error *ngIf="processosForm.get('data_entrada_sexec')?.hasError('required')">Data de Entrada Sexec é obrigatória</mat-error>
+        <mat-error
+          *ngIf="processosForm.get('data_entrada_sexec')?.hasError('required')"
+          >Data de Entrada Sexec é obrigatória</mat-error
+        >
       </mat-form-field>
       <mat-form-field appearance="outline">
         <mat-label>Unidade de Destino</mat-label>
-        <input matInput formControlName="unidade_destino" required>
-        <mat-error *ngIf="processosForm.get('unidade_destino')?.hasError('required')">Unidade de Destino é obrigatória</mat-error>
+        <input matInput formControlName="unidade_destino" required />
+        <mat-error
+          *ngIf="processosForm.get('unidade_destino')?.hasError('required')"
+          >Unidade de Destino é obrigatória</mat-error
+        >
       </mat-form-field>
       <mat-form-field appearance="outline">
         <mat-label>Objeto</mat-label>
-        <input matInput formControlName="objeto" required>
-        <mat-error *ngIf="processosForm.get('objeto')?.hasError('required')">Objeto é obrigatório</mat-error>
+        <input matInput formControlName="objeto" required />
+        <mat-error *ngIf="processosForm.get('objeto')?.hasError('required')"
+          >Objeto é obrigatório</mat-error
+        >
       </mat-form-field>
       <mat-form-field appearance="outline">
         <mat-label>Tipo de Solicitação</mat-label>
-        <input matInput formControlName="tipo_solicitacao" required>
-        <mat-error *ngIf="processosForm.get('tipo_solicitacao')?.hasError('required')">Tipo de Solicitação é obrigatório</mat-error>
+        <input matInput formControlName="tipo_solicitacao" required />
+        <mat-error
+          *ngIf="processosForm.get('tipo_solicitacao')?.hasError('required')"
+          >Tipo de Solicitação é obrigatório</mat-error
+        >
       </mat-form-field>
       <mat-form-field appearance="outline">
         <mat-label>Descrição da Solicitação</mat-label>
-        <textarea matInput formControlName="descricao_solicitacao" required></textarea>
-        <mat-error *ngIf="processosForm.get('descricao_solicitacao')?.hasError('required')">Descrição da Solicitação é obrigatória</mat-error>
+        <textarea
+          matInput
+          formControlName="descricao_solicitacao"
+          required
+        ></textarea>
+        <mat-error
+          *ngIf="
+            processosForm.get('descricao_solicitacao')?.hasError('required')
+          "
+          >Descrição da Solicitação é obrigatória</mat-error
+        >
       </mat-form-field>
       <mat-form-field appearance="outline">
         <mat-label>Ponto SEI Enviado Interno</mat-label>
-        <input matInput formControlName="ponto_sei_enviado_interno" required>
-        <mat-error *ngIf="processosForm.get('ponto_sei_enviado_interno')?.hasError('required')">Ponto SEI Enviado Interno é obrigatório</mat-error>
+        <input matInput formControlName="ponto_sei_enviado_interno" required />
+        <mat-error
+          *ngIf="
+            processosForm.get('ponto_sei_enviado_interno')?.hasError('required')
+          "
+          >Ponto SEI Enviado Interno é obrigatório</mat-error
+        >
       </mat-form-field>
       <mat-form-field appearance="outline">
         <mat-label>Data de Envio Interno</mat-label>
-        <input matInput [matDatepicker]="dataEnvioInterno" formControlName="data_envio_interno" required>
-        <mat-datepicker-toggle matSuffix [for]="dataEnvioInterno"></mat-datepicker-toggle>
+        <input
+          matInput
+          [matDatepicker]="dataEnvioInterno"
+          formControlName="data_envio_interno"
+          required
+        />
+        <mat-datepicker-toggle
+          matSuffix
+          [for]="dataEnvioInterno"
+        ></mat-datepicker-toggle>
         <mat-datepicker #dataEnvioInterno></mat-datepicker>
-        <mat-error *ngIf="processosForm.get('data_envio_interno')?.hasError('required')">Data de Envio Interno é obrigatória</mat-error>
+        <mat-error
+          *ngIf="processosForm.get('data_envio_interno')?.hasError('required')"
+          >Data de Envio Interno é obrigatória</mat-error
+        >
       </mat-form-field>
       <mat-form-field appearance="outline">
         <mat-label>Prazo de Resposta</mat-label>
-        <input matInput [matDatepicker]="prazoResposta" formControlName="prazo_resposta" required>
-        <mat-datepicker-toggle matSuffix [for]="prazoResposta"></mat-datepicker-toggle>
+        <input
+          matInput
+          [matDatepicker]="prazoResposta"
+          formControlName="prazo_resposta"
+          required
+        />
+        <mat-datepicker-toggle
+          matSuffix
+          [for]="prazoResposta"
+        ></mat-datepicker-toggle>
         <mat-datepicker #prazoResposta></mat-datepicker>
-        <mat-error *ngIf="processosForm.get('prazo_resposta')?.hasError('required')">Prazo de Resposta é obrigatório</mat-error>
+        <mat-error
+          *ngIf="processosForm.get('prazo_resposta')?.hasError('required')"
+          >Prazo de Resposta é obrigatório</mat-error
+        >
       </mat-form-field>
       <mat-form-field appearance="outline">
         <mat-label>Tempo de Encaminhamento</mat-label>
-        <input matInput type="number" formControlName="tm_encaminhamento" required>
-        <mat-error *ngIf="processosForm.get('tm_encaminhamento')?.hasError('required')">Tempo de Encaminhamento é obrigatório</mat-error>
+        <input
+          matInput
+          type="number"
+          formControlName="tm_encaminhamento"
+          required
+        />
+        <mat-error
+          *ngIf="processosForm.get('tm_encaminhamento')?.hasError('required')"
+          >Tempo de Encaminhamento é obrigatório</mat-error
+        >
       </mat-form-field>
       <mat-form-field appearance="outline">
         <mat-label>Dias a Vencer</mat-label>
-        <input matInput type="number" formControlName="dias_vencer" required>
-        <mat-error *ngIf="processosForm.get('dias_vencer')?.hasError('required')">Dias a Vencer é obrigatório</mat-error>
+        <input matInput type="number" formControlName="dias_vencer" required />
+        <mat-error
+          *ngIf="processosForm.get('dias_vencer')?.hasError('required')"
+          >Dias a Vencer é obrigatório</mat-error
+        >
       </mat-form-field>
       <mat-form-field appearance="outline">
         <mat-label>Situação</mat-label>
-        <input matInput formControlName="situacao" >
-        <mat-error *ngIf="processosForm.get('situacao')?.hasError('required')">Situação é obrigatória</mat-error>
+        <input matInput formControlName="situacao" />
+        <mat-error *ngIf="processosForm.get('situacao')?.hasError('required')"
+          >Situação é obrigatória</mat-error
+        >
       </mat-form-field>
       <mat-form-field appearance="outline">
         <mat-label>Data de Retorno</mat-label>
-        <input matInput [matDatepicker]="dataRetorno" formControlName="data_retorno" required>
-        <mat-datepicker-toggle matSuffix [for]="dataRetorno"></mat-datepicker-toggle>
+        <input
+          matInput
+          [matDatepicker]="dataRetorno"
+          formControlName="data_retorno"
+          required
+        />
+        <mat-datepicker-toggle
+          matSuffix
+          [for]="dataRetorno"
+        ></mat-datepicker-toggle>
         <mat-datepicker #dataRetorno></mat-datepicker>
-        <mat-error *ngIf="processosForm.get('data_retorno')?.hasError('required')">Data de Retorno é obrigatória</mat-error>
+        <mat-error
+          *ngIf="processosForm.get('data_retorno')?.hasError('required')"
+          >Data de Retorno é obrigatória</mat-error
+        >
       </mat-form-field>
       <mat-form-field appearance="outline">
         <mat-label>Tempo de Resposta</mat-label>
-        <input matInput type="number" formControlName="tm_resposta" required>
-        <mat-error *ngIf="processosForm.get('tm_resposta')?.hasError('required')">Tempo de Resposta é obrigatório</mat-error>
+        <input matInput type="number" formControlName="tm_resposta" required />
+        <mat-error
+          *ngIf="processosForm.get('tm_resposta')?.hasError('required')"
+          >Tempo de Resposta é obrigatório</mat-error
+        >
       </mat-form-field>
       <mat-form-field appearance="outline">
         <mat-label>Status</mat-label>
         <mat-select formControlName="status">
-          <mat-option value="Em análise de viabilidade técnica">Em análise de viabilidade técnica</mat-option>
-          <mat-option value="Providência e Custódias">Providência e Custódias</mat-option>
+          <mat-option value="Em análise de viabilidade técnica"
+            >Em análise de viabilidade técnica</mat-option
+          >
+          <mat-option value="Providência e Custódias"
+            >Providência e Custódias</mat-option
+          >
           <mat-option value="Respondido">Respondido</mat-option>
         </mat-select>
-        <mat-error *ngIf="processosForm.get('status')?.hasError('required')">Status é obrigatório</mat-error>
+        <mat-error *ngIf="processosForm.get('status')?.hasError('required')"
+          >Status é obrigatório</mat-error
+        >
       </mat-form-field>
       <mat-form-field appearance="outline">
         <mat-label>Informações Técnicas</mat-label>
-        <textarea matInput formControlName="informacoes_tecnicas" required></textarea>
-        <mat-error *ngIf="processosForm.get('informacoes_tecnicas')?.hasError('required')">Informações Técnicas são obrigatórias</mat-error>
+        <textarea
+          matInput
+          formControlName="informacoes_tecnicas"
+          required
+        ></textarea>
+        <mat-error
+          *ngIf="
+            processosForm.get('informacoes_tecnicas')?.hasError('required')
+          "
+          >Informações Técnicas são obrigatórias</mat-error
+        >
       </mat-form-field>
       <mat-form-field appearance="outline">
         <mat-label>Ponto SEI Enviado Externo</mat-label>
-        <input matInput formControlName="ponto_sei_enviado_externo" required>
-        <mat-error *ngIf="processosForm.get('ponto_sei_enviado_externo')?.hasError('required')">Ponto SEI Enviado Externo é obrigatório</mat-error>
+        <input matInput formControlName="ponto_sei_enviado_externo" required />
+        <mat-error
+          *ngIf="
+            processosForm.get('ponto_sei_enviado_externo')?.hasError('required')
+          "
+          >Ponto SEI Enviado Externo é obrigatório</mat-error
+        >
       </mat-form-field>
       <mat-form-field appearance="outline">
         <mat-label>Data de Envio Externo</mat-label>
-        <input matInput [matDatepicker]="dataEnvioExterno" formControlName="data_envio_externo" required>
-        <mat-datepicker-toggle matSuffix [for]="dataEnvioExterno"></mat-datepicker-toggle>
+        <input
+          matInput
+          [matDatepicker]="dataEnvioExterno"
+          formControlName="data_envio_externo"
+          required
+        />
+        <mat-datepicker-toggle
+          matSuffix
+          [for]="dataEnvioExterno"
+        ></mat-datepicker-toggle>
         <mat-datepicker #dataEnvioExterno></mat-datepicker>
-        <mat-error *ngIf="processosForm.get('data_envio_externo')?.hasError('required')">Data de Envio Externo é obrigatória</mat-error>
+        <mat-error
+          *ngIf="processosForm.get('data_envio_externo')?.hasError('required')"
+          >Data de Envio Externo é obrigatória</mat-error
+        >
       </mat-form-field>
       <mat-form-field appearance="outline">
         <mat-label>Data de Preenchimento</mat-label>
-        <input matInput [matDatepicker]="dataPreenchimento" formControlName="data_preenchimento" required>
-        <mat-datepicker-toggle matSuffix [for]="dataPreenchimento"></mat-datepicker-toggle>
+        <input
+          matInput
+          [matDatepicker]="dataPreenchimento"
+          formControlName="data_preenchimento"
+          required
+        />
+        <mat-datepicker-toggle
+          matSuffix
+          [for]="dataPreenchimento"
+        ></mat-datepicker-toggle>
         <mat-datepicker #dataPreenchimento></mat-datepicker>
-        <mat-error *ngIf="processosForm.get('data_preenchimento')?.hasError('required')">Data de Preenchimento é obrigatória</mat-error>
+        <mat-error
+          *ngIf="processosForm.get('data_preenchimento')?.hasError('required')"
+          >Data de Preenchimento é obrigatória</mat-error
+        >
       </mat-form-field>
       <mat-form-field appearance="outline">
         <mat-label>Observação</mat-label>
         <textarea matInput formControlName="observacao" required></textarea>
-        <mat-error *ngIf="processosForm.get('observacao')?.hasError('required')">Observação é obrigatória</mat-error>
+        <mat-error *ngIf="processosForm.get('observacao')?.hasError('required')"
+          >Observação é obrigatória</mat-error
+        >
       </mat-form-field>
-      <button mat-raised-button color="primary" type="submit" >Atualizar</button>
+      <button mat-raised-button color="primary" type="submit">Atualizar</button>
     </form>
   </mat-card>
-  <footer><img src="/front/public/PREFEITURA_2.png" alt="SPRegula"></footer>
+  <footer><img src="/front/public/PREFEITURA_2.png" alt="SPRegula" /></footer>
 </div>
-
-
-

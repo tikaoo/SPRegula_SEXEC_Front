@@ -22,4 +22,10 @@ export class UsuarioHttpService {
   public editUser(user: IUsuarios): Observable<IUsuarios> {
     return this.http.put<IUsuarios>(`${this.baseURL}/${user.id}`, user)
   }
+  public getUsers(): Observable<IUsuarios[]> {
+    return this.http.get<IUsuarios[]>(this.baseURL)
+  }
+  public delUsers(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.baseURL}/${id}`)
+  }
 }

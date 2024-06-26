@@ -4,12 +4,12 @@
     <form [formGroup]="usuario" (ngSubmit)="submit()">
       <mat-form-field appearance="outline">
         <mat-label>E-mail</mat-label>
-        <input matInput formControlName="email" required>
+        <input type="email" matInput formControlName="email" required>
         <mat-error *ngIf="usuario.get('email')?.hasError('required')">E-mail é obrigatório</mat-error>
       </mat-form-field>
       <mat-form-field appearance="outline">
         <mat-label>Senha</mat-label>
-        <input matInput formControlName="senha" required>
+        <input type="password"  matInput formControlName="senha" required>
         <mat-error *ngIf="usuario.get('senha')?.hasError('required')">Senha é obrigatório</mat-error>
       </mat-form-field>
       <button mat-raised-button color="primary" type="submit">Enviar</button>

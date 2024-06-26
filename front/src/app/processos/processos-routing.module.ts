@@ -6,39 +6,49 @@ import { ListarProcessosComponent } from './pages/listar-processos/listar-proces
 import { NavibarComponent } from './pages/navibar/navibar.component';
 import { confirmExitGuard } from '../guard/confirm-exit.guard';
 import { RegistrarComponent } from './pages/registrar/registrar/registrar.component';
+import { EditUsersComponent } from './pages/editar-usuarios/edit-users/edit-users.component';
+import { ListUsersComponent } from './pages/listar-users/list-users/list-users.component';
 
 const routes: Routes = [
   {
     path: 'spregula/cadastrar-processos',
     component: CadastrarProcessosComponent,
-    canDeactivate:[
+    canDeactivate: [
       confirmExitGuard
     ]
   },
   {
     path: 'spregula/edit/:SEI',
     component: EditarProcessosComponent,
-    canDeactivate:[
+    canDeactivate: [
       confirmExitGuard
     ]
   },
   {
     path: '',
     pathMatch: 'full',
-    redirectTo:'/home/login'
+    redirectTo: '/home/login'
   },
 
   {
-    path:'login',
-    component:NavibarComponent
+    path: 'login',
+    component: NavibarComponent
   },
   {
-    path:'processos',
+    path: 'processos',
     component: ListarProcessosComponent
   },
   {
-    path:'registrar',
-    component:RegistrarComponent
+    path: 'registrar',
+    component: RegistrarComponent
+  },
+  {
+    path: 'edit/:id',
+    component: EditUsersComponent
+  },
+  {
+    path: 'users',
+    component: ListUsersComponent
   }
 
 ];
@@ -46,8 +56,8 @@ const routes: Routes = [
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
-  providers:[{
-    provide:'confirmExitGuard',
+  providers: [{
+    provide: 'confirmExitGuard',
     useValue: (route: ActivatedRouteSnapshot, state: RouterStateSnapshot) => true
 
   }]

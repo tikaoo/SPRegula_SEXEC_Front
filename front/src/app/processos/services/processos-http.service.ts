@@ -14,11 +14,11 @@ export class ProcessosHttpService {
 
   constructor(private http: HttpClient) { }
 
-public getProcessos(): Observable<IProcessosSexec[]> {
+  public getProcessos(): Observable<IProcessosSexec[]> {
     return this.http.get<IProcessosSexec[]>(this.baseURL)
   }
 
-  public getProcessoId(idProcesso: number):Observable<IProcessosSexec>{
+  public getProcessoId(idProcesso: number): Observable<IProcessosSexec> {
     return this.http.get<IProcessosSexec>(`${this.baseURL}/${idProcesso}`)
   }
   public getProcessoSei(SEI: string): Observable<IProcessosSexec> {
@@ -38,17 +38,17 @@ public getProcessos(): Observable<IProcessosSexec[]> {
         })
       );
   }
-  public deleteProcesso(idProcesso: number): Observable<void>{
+  public deleteProcesso(idProcesso: number): Observable<void> {
     return this.http.delete<void>(`${this.baseURL}/${idProcesso}`)
   }
-  public deleteProcessoSei(SEI: string): Observable<void>{
+  public deleteProcessoSei(SEI: string): Observable<void> {
     return this.http.delete<void>(`${this.baseURL}/spregula/${SEI}`)
   }
-  public addProcesso(processo: IProcessosSexec):Observable<IProcessosSexec>{
-    return this.http.post<IProcessosSexec>(`${this.baseURL}`,processo)
+  public addProcesso(processo: IProcessosSexec): Observable<IProcessosSexec> {
+    return this.http.post<IProcessosSexec>(`${this.baseURL}`, processo)
   }
-  public editProcesso(processo: IProcessosSexec): Observable<IProcessosSexec>{
-    return this.http.put<IProcessosSexec>(`${this.baseURL}/spregula/edit/${processo.SEI}`,processo)
+  public editProcesso(processo: IProcessosSexec): Observable<IProcessosSexec> {
+    return this.http.put<IProcessosSexec>(`${this.baseURL}/spregula/edit/${processo.SEI}`, processo)
   }
 }
 

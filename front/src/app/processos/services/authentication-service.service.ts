@@ -10,12 +10,12 @@ import { IUsuarios } from '../../Model/usuarios';
 export class AuthenticationServiceService {
 
   private readonly baseUrl = environment.login
-  private logged$:BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false)
+  private logged$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false)
 
-  constructor(private http:HttpClient) { }
+  constructor(private http: HttpClient) { }
 
-  login(usuario: IUsuarios): Observable<{Authorization: string}> {
-    return this.http.post<{Authorization: string}>(`${this.baseUrl}/login`, usuario)
+  login(usuario: IUsuarios): Observable<{ Authorization: string }> {
+    return this.http.post<{ Authorization: string }>(`${this.baseUrl}/login`, usuario)
       .pipe(
         tap((response) => {
           const token = response.Authorization;
@@ -28,7 +28,7 @@ export class AuthenticationServiceService {
         })
       );
   }
-  logged():Observable<boolean>{
+  logged(): Observable<boolean> {
     return this.logged$.asObservable()
   }
   logout(): void {
