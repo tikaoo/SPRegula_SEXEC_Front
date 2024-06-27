@@ -8,6 +8,7 @@ import { confirmExitGuard } from '../guard/confirm-exit.guard';
 import { RegistrarComponent } from './pages/registrar/registrar/registrar.component';
 import { EditUsersComponent } from './pages/editar-usuarios/edit-users/edit-users.component';
 import { ListUsersComponent } from './pages/listar-users/list-users/list-users.component';
+import { isNumberGuard } from '../guard/is-number.guard';
 
 const routes: Routes = [
   {
@@ -43,23 +44,19 @@ const routes: Routes = [
     component: RegistrarComponent
   },
   {
-    path: 'edit/:id',
-    component: EditUsersComponent
+    path: 'users',
+    component: ListUsersComponent,
   },
   {
-    path: 'users',
-    component: ListUsersComponent
-  }
+    path:'user/:id',
+    component:EditUsersComponent,
 
+  }
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
-  providers: [{
-    provide: 'confirmExitGuard',
-    useValue: (route: ActivatedRouteSnapshot, state: RouterStateSnapshot) => true
-
-  }]
+  providers: []
 })
 export class ProcessosRoutingModule { }

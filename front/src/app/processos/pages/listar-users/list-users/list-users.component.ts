@@ -29,6 +29,7 @@ export class ListUsersComponent implements OnInit {
     private userService: UsuarioHttpService,
     private router: Router,
     private authService: AuthenticationServiceService) { }
+
   ngOnInit(): void {
     this.recoveryUsers();
   }
@@ -81,4 +82,5 @@ export class ListUsersComponent implements OnInit {
     this.authService.logout();
     this.router.navigate(['/home/login']); // Substitua '/login' pela rota da página de login
   }
+
 }

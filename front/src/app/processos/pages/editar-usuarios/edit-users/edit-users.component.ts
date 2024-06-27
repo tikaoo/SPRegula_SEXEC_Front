@@ -70,7 +70,7 @@ export class EditUsersComponent implements OnInit {
     )
   }
   voltarAosProcessos(): void {
-    this.router.navigate(['home/login']);
+    this.router.navigate(['home/users']);
   }
 
 }
