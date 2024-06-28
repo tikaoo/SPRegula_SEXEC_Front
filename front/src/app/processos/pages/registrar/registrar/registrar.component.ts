@@ -22,35 +22,42 @@ export class RegistrarComponent {
     private userHttp: UsuarioHttpService
   ) {
     this.userForm = this.fb.group({
-      nome: ['', Validators.required],
-      email: ['', Validators.required,Validators.email],
-      senha: ['', Validators.required],
-      departamento:['',Validators.required],
-      permissao:[''],
-      confirmSenha: ['', Validators.required]
+      nome: ['', [Validators.required]],
+      email: ['', [Validators.required, Validators.email]],
+      senha: ['', [Validators.required]],
+      departamento: ['', [Validators.required,Validators.minLength(6)]],
+      confirmSenha: ['', [Validators.required]]
     })
-    }
-
-    register(){
-      const user:IUsuarios = this.userForm.value as IUsuarios;
-      this.userHttp.addUser(user).subscribe(()=>{
-        Swal.fire('Sucesso!', 'Usuário cadastrado com sucesso', 'success');
-        this.router.navigateByUrl('/home/login');
-      },(error) =>{
-          if(error.status === 500){
-            Swal.fire('Erro','Usuário já cadastrado','error')
-          }else if (error.status === 400){
-            Swal.fire('Erro!', 'e-mail Inválido', 'error');
-          }else if (user.senha != user.confirmSenha){
-            Swal.fire('Erro!', 'Senhas diferentes!', 'error');
-          }else{
-            Swal.fire('Erro!', 'Falha ao cadastrar cliente.', 'error');
-          }
-      }
-      )
-    }
-    voltarAosProcessos(): void {
-      this.router.navigate(['home/login']);
-    }
-
   }
+
+  register() {
+    if (this.userForm.invalid) {
+      this.userForm.markAllAsTouched(); // Marca todos os campos como tocados para exibir os erros de validação
+      return;
+    }
+
+    const user: IUsuarios = this.userForm.value as IUsuarios;
+
+    if (user.senha !== user.confirmSenha) {
+      Swal.fire('Erro!', 'Senhas diferentes!', 'error');
+      return;
+    }
+
+    this.userHttp.addUser(user).subscribe(() => {
+      Swal.fire('Sucesso!', 'Usuário cadastrado com sucesso', 'success');
+      this.router.navigateByUrl('/home/login');
+    }, (error) => {
+      if (error.status === 500) {
+        Swal.fire('Erro', 'Usuário já cadastrado', 'error');
+      } else if (error.status === 400) {
+        Swal.fire('Erro!', 'E-mail inválido', 'error');
+      } else {
+        Swal.fire('Erro!', 'Falha ao cadastrar usuário.', 'error');
+      }
+    });
+  }
+  voltarAosProcessos(): void {
+    this.router.navigate(['home/login']);
+  }
+
+}

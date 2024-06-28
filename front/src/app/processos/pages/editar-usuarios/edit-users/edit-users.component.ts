@@ -16,44 +16,46 @@ import { UsuarioHttpService } from '../../../services/usuario-http.service';
 })
 export class EditUsersComponent implements OnInit {
   user!: IUsuarios
-  userForm: FormGroup;
+
+  userForm:FormGroup = this.fb.group({
+    nome: ['', [Validators.required]],
+    email: ['', [Validators.required, Validators.email]],
+    senha: ['', [Validators.required]],
+    departamento: ['', [Validators.required]],
+    confirmSenha: ['', [Validators.required]]
+  })
 
   constructor(private fb: FormBuilder,
     private router: Router,
     private userHttp: UsuarioHttpService,
     private route: ActivatedRoute,
-  ) {
-    this.userForm = this.fb.group({
-      nome: ['', Validators.required],
-      email: ['', Validators.required, Validators.email],
-      senha: ['', Validators.required],
-      departamento: ['', Validators.required],
-      permissao: [''],
-      confirmSenha: ['', Validators.required]
-    })
-  }
+  ) {}
+
+
   ngOnInit(): void {
-    const id: number = parseInt(this.route.snapshot.paramMap.get('id') || '0')
-
-    this.userHttp.getUserById(id)
-      .subscribe(
-        (f) => {
-          this.user = f
-
+    const idUser: number = parseInt(this.route.snapshot.paramMap.get('id') || '0')
+      if(idUser){
+    this.userHttp.getUserById(idUser).subscribe(
+        (response) => {
+          this.user = response
           this.userForm.patchValue({
             nome: this.user.nome,
             email: this.user.email,
-            departatamento: this.user.departamento,
+            departamento: this.user.departamento,
             senha: this.user.senha
           })
         }
       )
+      }
   }
 
-
   register() {
-    const user: IUsuarios = this.userForm.value as IUsuarios;
-    this.userHttp.editUser(user).subscribe(() => {
+    this.user.nome = this.userForm.value.nome
+    this.user.email = this.userForm.value.email
+    this.user.departamento =this.userForm.value.departamento
+    this.user.senha =this.userForm.value.senha
+
+    this.userHttp.editUser(this.user).subscribe(() => {
       Swal.fire('Sucesso!', 'Usuário editado com sucesso', 'success');
       this.router.navigateByUrl('/home/login');
     }, (error) => {
@@ -61,7 +63,7 @@ export class EditUsersComponent implements OnInit {
         Swal.fire('Erro', 'Usuário já cadastrado', 'error')
       } else if (error.status === 400) {
         Swal.fire('Erro!', 'e-mail Inválido', 'error');
-      } else if (user.senha != user.confirmSenha) {
+      } else if (this.user.senha != this.userForm.value.confirmSenha) {
         Swal.fire('Erro!', 'Senhas diferentes!', 'error');
       } else {
         Swal.fire('Erro!', 'Falha ao cadastrar cliente.', 'error');

@@ -50,6 +50,9 @@ const routes: Routes = [
   {
     path:'user/:id',
     component:EditUsersComponent,
+    canActivate:[
+      isNumberGuard
+    ]
 
   }
 ];
